@@ -1,0 +1,357 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}
+    {{ block.super }} - Главная
+{% endblock %}
+
+
+{% block content %}
+  <header class="header-with-bg">
+    <div class=" header-wrapper ">
+        <div class="container wrapper">
+            <div class="grid-item header-logo">
+                <a href="/">keybook</a>
+            </div>
+            <div class="header-nav">
+                <ul class="nav wrapper">
+                    <li><a href="{% url 'search' %}">арендовать помещение</a></li>
+                    <li><a href="#">о нас</a></li>
+                    <li><a href="#">вы арендадатель ?</a></li>
+                    <li><a href="{% url 'search' %}">смотреть на карте</a></li>
+                    <li><a href="#">контакты</a></li>
+                    <!--li class="with-separator"><a href="#">контакты</a></li-->
+                   {% if not request.user.is_authenticated %}
+                        <li><a href="{% url 'login' %}">вход/регистрация</a></li>
+                    {% else %}
+                        <li><a href="{% url 'lk' %}">личный кабинет</a></li>
+                    {% endif %}
+                </ul>
+
+            </div>
+        </div>
+
+    </div><!-- end header-wrapper -->
+
+    <div class="container  header-inner">
+        <div class="search-panel">
+            <div class="search-wrapper">
+                <div class="search-left-controls">
+                    <div class="select-box">
+                        <div class="select-box__current" tabindex="1">
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="0" value="1" name="Ben" checked="checked"/>
+                                <p class="select-box__input-text">регион 1</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="1" value="2" name="Ben" checked="checked"/>
+                                <p class="select-box__input-text">регион 2</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="2" value="3" name="Ben" checked="checked"/>
+                                <p class="select-box__input-text">регион 3</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="5" value="4" name="Ben" checked="checked"/>
+                                <p class="select-box__input-text">регион 4</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="6" value="4" name="Ben" checked="checked"/>
+                                <p class="select-box__input-text">регион 4</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="7" value="4" name="Ben" checked="checked"/>
+                                <p class="select-box__input-text">регион 4</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="8" value="4" name="Ben" checked="checked"/>
+                                <p class="select-box__input-text">регион 4</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="3" value="4" name="Ben" checked="checked"/>
+                                <p class="select-box__input-text">регион 4</p>
+                            </div>
+                            <div class="select-box__value placeholder" >
+                                <input class="select-box__input" type="radio" id="4" value="5" name="Ben" checked="checked"/>
+                                <p class="select-box__input-text">выбор региона</p>
+                            </div><img class="select-box__icon" src="{% static 'images/close-icon.svg' %}" alt="Arrow Icon" aria-hidden="true"/>
+                        </div>
+                        <ul class="select-box__list">
+                            <li>
+                                <label class="select-box__option" for="0" aria-hidden="aria-hidden">регион 1</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="1" aria-hidden="aria-hidden">регион 2</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="2" aria-hidden="aria-hidden">регион 3</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="3" aria-hidden="aria-hidden">регион 4</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="4" aria-hidden="aria-hidden">выбор региона</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="5" aria-hidden="aria-hidden">регион 1</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="6" aria-hidden="aria-hidden">регион 2</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="7" aria-hidden="aria-hidden">регион 3</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="8" aria-hidden="aria-hidden">регион 4</label>
+                            </li>
+
+                        </ul>
+                    </div><!-- select-box -->
+                    <div class="select-box">
+                        <div class="select-box__current" tabindex="1">
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="01" value="1" name="Ben1" checked="checked"/>
+                                <p class="select-box__input-text">город 1</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="11" value="2" name="Ben1" checked="checked"/>
+                                <p class="select-box__input-text">город 2</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="21" value="3" name="Ben1" checked="checked"/>
+                                <p class="select-box__input-text">город 3</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="31" value="4" name="Ben1" checked="checked"/>
+                                <p class="select-box__input-text">город 4</p>
+                            </div>
+                            <div class="select-box__value placeholder" >
+                                <input class="select-box__input" type="radio" id="41" value="5" name="Ben1" checked="checked"/>
+                                <p class="select-box__input-text">ВЫБОР ГОРОДА</p>
+                            </div><img class="select-box__icon" src="{% static 'images/close-icon.svg' %}" alt="Arrow Icon" aria-hidden="true"/>
+                        </div>
+                        <ul class="select-box__list">
+                            <li>
+                                <label class="select-box__option" for="01" aria-hidden="aria-hidden">город 1</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="11" aria-hidden="aria-hidden">город 2</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="21" aria-hidden="aria-hidden">город 3</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="31" aria-hidden="aria-hidden">город 4</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="41" aria-hidden="aria-hidden">ВЫБОР ГОРОДА</label>
+                            </li>
+                        </ul>
+                    </div><!-- select-box -->
+                    <div class="select-box">
+                        <div class="select-box__current" tabindex="1">
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="011" value="1" name="Ben11" checked="checked"/>
+                                <p class="select-box__input-text">ТИП ПОМЕЩЕНИЯ 1</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="111" value="2" name="Ben11" checked="checked"/>
+                                <p class="select-box__input-text">ТИП ПОМЕЩЕНИЯ 2</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="211" value="3" name="Ben11" checked="checked"/>
+                                <p class="select-box__input-text">ТИП ПОМЕЩЕНИЯ 3</p>
+                            </div>
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="311" value="4" name="Ben11" checked="checked"/>
+                                <p class="select-box__input-text">ТИП ПОМЕЩЕНИЯ 4</p>
+                            </div>
+                            <div class="select-box__value placeholder" >
+                                <input class="select-box__input" type="radio" id="411" value="5" name="Ben11" checked="checked"/>
+                                <p class="select-box__input-text">ТИП ПОМЕЩЕНИЯ</p>
+                            </div><img class="select-box__icon" src="{% static 'images/close-icon.svg' %}" alt="Arrow Icon" aria-hidden="true"/>
+                        </div>
+                        <ul class="select-box__list">
+                            <li>
+                                <label class="select-box__option" for="011" aria-hidden="aria-hidden">ТИП ПОМЕЩЕНИЯ 1</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="111" aria-hidden="aria-hidden">ТИП ПОМЕЩЕНИЯ 2</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="211" aria-hidden="aria-hidden">ТИП ПОМЕЩЕНИЯ 3</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="311" aria-hidden="aria-hidden">ТИП ПОМЕЩЕНИЯ 4</label>
+                            </li>
+                            <li>
+                                <label class="select-box__option" for="411" aria-hidden="aria-hidden">ТИП ПОМЕЩЕНИЯ</label>
+                            </li>
+                        </ul>
+                    </div><!-- select-box -->
+                    <label style="align-self: center;" class="custom-check-box"><span>ПОЧАСОВАЯ АРЕНДА</span>
+                        <input type="checkbox" checked="checked">
+                        <span class="checkmark"></span>
+                    </label>
+                    <button style="padding: 10px 0" class="btn btn-filled">ВЫБОР ДАТЫ</button>
+                    <button style="padding: 10px 0" class="btn btn-filled">ВЫБОР ЧАСА</button>
+
+                </div>
+                <div class="search-right-controls">
+                    <div class="search-right-controls_input-group">
+                        <span>цена:</span>
+                        <input type="text" placeholder="от">
+                        <input type="text" placeholder="до">
+
+                    </div>
+                    <div class="search-right-controls_input-group">
+                        <span>площадь:</span>
+                        <input type="text" placeholder="от">
+                        <input type="text" placeholder="до">
+
+                    </div>
+                    <a href="#" class="btn btn-filled">Поиск</a>
+
+                </div>
+
+            </div>
+            <div class="search-bar">
+                <div class="search-bar-left">
+                    <span>сортировать по</span>
+
+                </div>
+                <div class="search-bar-right">
+                    <a href="#">задать вопрос</a>
+                    <a href="javascript:(void 0)" onclick="toggleBlock('filter')">показать фильтры</a>
+                    <a href="javascript:(void 0)" onclick="toggleBlock('map')">показать карту</a>
+                </div>
+
+            </div>
+            <div class="search-panel-bottom">
+                <div class="search-filters">
+                    <div class="search-filters-block">
+                        <p class="filter-separator">Lorem ipsum.</p>
+                        <div  class="search-filters-block-items">
+                            <div  class="search-filters-block-items-left">
+                                <label class="custom-check-box"><span>ПОЧАСОВАЯ АРЕНДА</span>
+                                    <input type="checkbox" checked="checked">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="custom-check-box"><span>ПОЧАСОВАЯ АРЕНДА</span>
+                                    <input type="checkbox" checked="checked">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="custom-check-box"><span>ПОЧАСОВАЯ АРЕНДА</span>
+                                    <input type="checkbox" checked="checked">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="custom-check-box"><span>ПОЧАСОВАЯ АРЕНДА</span>
+                                    <input type="checkbox" checked="checked">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="custom-check-box"><span>ПОЧАСОВАЯ АРЕНДА</span>
+                                    <input type="checkbox" checked="checked">
+                                    <span class="checkmark"></span>
+                                </label>
+
+                            </div>
+                            <div  class="search-filters-block-items-right">
+                                <div class="search-right-controls_input-group">
+                                    <span>этажность:</span>
+                                    <input type="text" placeholder="от">
+                                    <input type="text" placeholder="до">
+
+                                </div>
+                                <div class="search-right-controls_input-group">
+                                    <span>этаж:</span>
+                                    <input type="text" placeholder="от">
+                                    <input type="text" placeholder="до">
+
+                                </div>
+                                  <div class="search-right-controls_input-group">
+                                    <span>этаж:</span>
+                                    <input type="text" placeholder="от">
+                                    <input type="text" placeholder="до">
+
+                                </div>
+                                  <div class="search-right-controls_input-group">
+                                    <span>этаж:</span>
+                                    <input type="text" placeholder="от">
+                                    <input type="text" placeholder="до">
+
+                                </div>
+                                  <div class="search-right-controls_input-group">
+                                    <span>этаж:</span>
+                                    <input type="text" placeholder="от">
+                                    <input type="text" placeholder="до">
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+                <div class="search-map">
+                    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Ac08e4550a9f6c84a28aff7860d0e4b5ab85c2a734eec5e2f47b89af16e0a9de9&amp;width=100%25&amp;height=350&amp;lang=ru_RU&amp;scroll=true"></script>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div><!-- end header-inner -->
+
+
+
+</header>
+
+<section class="best-offers">
+    <div class="container" >
+        <div class="section-header">
+            <h3><span>лучшие</span> предложения для вас</h3>
+        </div>
+        <div class=" best-offers-inner">
+            <div class="best-offers-item">
+                <div class="best-offers-item__image" style="background: url(images/small-item.jpg); cursor: pointer">
+                    <span>2000 руб/сутки</span>
+                    <div class="best-offers-item__star">
+                        <b>&#9733;</b>
+                        <b></b>
+                    </div>
+                </div>
+                <div class="best-offers-item__info">
+                    <div class="best-offers-item__info-left">
+                        <p><a href="#">Lorem ipsum dolor.</a></p>
+                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quisquam.</span>
+                    </div>
+                </div>
+            </div><!--//best-offers-item -->
+
+            <div class="best-offers-item">
+                <div class="best-offers-item__image" style="background: url(images/small-item.jpg); cursor: pointer">
+                    <span>2000 руб/сутки</span>
+                    <div class="best-offers-item__star">
+                        <b class="in-fav">&#9733;</b>
+                        <b>4.5</b>
+                    </div>
+                </div>
+                <div class="best-offers-item__info">
+                    <div class="best-offers-item__info-left">
+                        <p><a href="#">Lorem ipsum dolor.</a></p>
+                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quisquam.</span>
+                    </div>
+                </div>
+            </div><!--//best-offers-item -->
+
+
+        </div><!--//best-offers-best-offers-inner -->
+
+    </div>
+
+</section>
+
+
+
+{% endblock %}

@@ -1,26 +1,30 @@
 <header class="header-with-bg">
     <div class=" header-wrapper ">
-      <div class="container wrapper">
-               <div class="grid-item header-logo">
-           <a href="/">keybook</a>
-        </div>
-      <div class="header-nav">
-        <ul class="nav wrapper">
-          <li><a href="#">арендовать помещение</a></li>
-          <li><a href="#">о нас</a></li>
-          <li><a href="#">вы арендадатель ?</a></li>
-          <li><a href="#">смотреть на карте</a></li>
-          <li><a href="#">контакты</a></li>
-          <!--li class="with-separator"><a href="#">контакты</a></li-->
-            {% if not request.user.is_authenticated %}
-            <li><a href="{% url 'login' %}">вход/регистрация</a></li>
-            {% else %}
-                <li><a href="{% url 'lk' %}">личный кабинет</a></li>
-            {% endif %}
-        </ul>
+        <div class="container wrapper">
+            <div class="grid-item header-logo">
+                <a href="/">keybook</a>
+                <div class="header-languages">
+                    <p class="active">RU</p>
+                    <p>USD</p>
+                </div>
+            </div>
+            <div class="header-nav">
+                <ul class="nav wrapper">
+                    <li><a href="{% url 'search' %}">арендовать помещение</a></li>
+                    <li><a href="#">о нас</a></li>
+                    <li><a href="#">вы арендадатель ?</a></li>
+                    <li><a href="{% url 'search' %}">смотреть на карте</a></li>
+                    <li><a href="#">контакты</a></li>
+                    <!--li class="with-separator"><a href="#">контакты</a></li-->
+                    {% if not request.user.is_authenticated %}
+                        <li><a href="{% url 'login' %}">вход/регистрация</a></li>
+                    {% else %}
+                        <li><a href="{% url 'lk' %}">личный кабинет</a></li>
+                    {% endif %}
+                </ul>
 
-      </div>
-      </div>
+            </div>
+        </div>
 
     </div><!-- end header-wrapper -->
 
@@ -28,8 +32,13 @@
 
         <h1>арендовать помещение<br/>по вашим запросам</h1>
         <p class="header-inner-small-text">Огромный выбор, разные типы помещений, почасовая аренда</p>
+        <div class="header-inner-form">
+            <div class="header-inner-form__inputs">
+                <input type="text" placeholder="Введите значение">
+                <input type="text" placeholder="Введите значение">
+                <input type="text" placeholder="Введите значение">
+            </div>
+            <a href="{% url 'search' %}" class="btn btn-filled">СМОТРЕТЬ ПРЕДЛОЖЕНИЯ</a>
+        </div>
     </div><!-- end header-inner -->
-
-
-
 </header>

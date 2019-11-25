@@ -119,7 +119,105 @@
               история
             </div>
             <div id="houses" class="tab-content">
-               мои дома
+                     <div class="all-houses-tab ">
+                <div class=" best-offers-inner">
+                    <div class="add-house">
+                        <a href="#">+</a>
+
+
+                    </div>
+                    <div class="best-offers-item">
+                        <div class="best-offers-item__image" style="background: url(images/small-item.jpg); cursor: pointer">
+                            <span>2000 руб/сутки</span>
+                            <div class="best-offers-item__star">
+                                <b>&#9733;</b>
+                                <b></b>
+                            </div>
+                        </div>
+                        <div class="best-offers-item__info">
+                            <div class="best-offers-item__info-left">
+                                <p><a href="#">Lorem ipsum dolor.</a></p>
+                                <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quisquam.</span>
+                            </div>
+
+                        </div>
+                        <a class="add-btn" href="#">удалить</a>
+                        <a class="add-btn" href="#">сделать неактивным</a>
+                    </div><!--//best-offers-item -->
+
+
+
+
+                </div><!--//best-offers-best-offers-inner -->
+            </div>
+            <div class="add-house-tab tab-visible">
+                <form class="add-house-tab-form">
+                    <input type="text" placeholder="НАЗВАНИЕ ПОМЕЩЕНИЯ">
+                    <input type="text" placeholder="РАСПОЛОЖЕНИЕ (АДРЕС)">
+                    <input type="text" placeholder="СТОИМОСТЬ ПОСУТОЧНОЙ АРЕНДЫ">
+                      <div class="select-box">
+                        <div class="select-box__current" tabindex="1">
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="cat-0" value="1" name="Ben" checked="checked"/>
+                                <p class="select-box__input-text">регион 1</p>
+                            </div>
+
+                            <div class="select-box__value placeholder" >
+                                <input class="select-box__input" type="radio" id="cat-10000" value="5" name="Ben" checked="checked"/>
+                                <p class="select-box__input-text">КАТЕГОРИЯ ПОМЕЩЕНИЯ</p>
+                            </div><img class="select-box__icon" src="{% static 'images/close-icon.svg' %}" alt="Arrow Icon" aria-hidden="true"/>
+                        </div>
+                        <ul class="select-box__list">
+                            <li>
+                                <label class="select-box__option" for="cat-0" aria-hidden="aria-hidden">регион 1</label>
+                            </li>
+
+                            <li>
+                                <label class="select-box__option" for="cat-10000" aria-hidden="aria-hidden">КАТЕГОРИЯ ПОМЕЩЕНИЯ</label>
+                            </li>
+
+                        </ul>
+                    </div><!-- select-box -->
+                      <div class="select-box">
+                        <div class="select-box__current" tabindex="1">
+                            <div class="select-box__value">
+                                <input class="select-box__input" type="radio" id="town-0" value="1" name="town" checked="checked"/>
+                                <p class="select-box__input-text">регион 1</p>
+                            </div>
+
+                            <div class="select-box__value placeholder" >
+                                <input class="select-box__input" type="radio" id="town-10000" value="5" name="town" checked="checked"/>
+                                <p class="select-box__input-text">ВЫБОР ГОРОДА</p>
+                            </div><img class="select-box__icon" src="{% static 'images/close-icon.svg' %}" alt="Arrow Icon" aria-hidden="true"/>
+                        </div>
+                        <ul class="select-box__list">
+                            <li>
+                                <label class="select-box__option" for="town-0" aria-hidden="aria-hidden">регион 1</label>
+                            </li>
+
+                            <li>
+                                <label class="select-box__option" for="town-10000" aria-hidden="aria-hidden">ВЫБОР ГОРОДА</label>
+                            </li>
+
+                        </ul>
+                    </div><!-- select-box -->
+                    <textarea placeholder="ОПИСАНИЕ ОБЪЕКТА"></textarea>
+                    <div class="add-house-tab-form-image-buttons">
+                        <label for="one_file">
+                            <span>+</span>
+                            <p>ПРЕВЬЮ</p>
+                            <input id="one_file" type="file">
+                        </label>
+                         <label for="multuple_file">
+                             <span>+</span>
+                             <p>ФОТО ПОМЕЩЕНИЯ</p>
+                            <input id="multuple_file" type="file" multiple>
+                        </label>
+                    </div>
+
+                </form>
+            </div>
+
             </div>
             <div id="active-rent" class="tab-content">
               активные аренды

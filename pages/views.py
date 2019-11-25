@@ -1,10 +1,11 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
-from django.contrib.auth import authenticate
+
 from django.contrib import messages
 from .models import *
 from filter.models import *
 from customuser.forms import *
+from django.contrib.auth import authenticate,logout,login
 
 def index(request):
     allNews = News.objects.filter(isShowAtIndex=True)
@@ -22,14 +23,19 @@ def product(request,slug):
     return render(request, 'pages/product.html', locals())
 
 
-def login(request):
+def login_page(request):
     form = SignUpForm()
     return render(request, 'pages/login.html', locals())
+
+def search(request):
+
+    return render(request, 'pages/search.html', locals())
 
 def login_req(request):
     user = authenticate(username=request.POST.get('email'), password=request.POST.get('password'))
     if user is not None:
-        return render(request, 'pages/lk.html', locals())
+        login(request, user)
+        return HttpResponseRedirect("/lk")
     else:
         messages.success(request, 'Проверьте введенные данные')
         return HttpResponseRedirect('/login')
@@ -49,6 +55,7 @@ def reg_req(request):
 
     if not form.errors:
         new_user = form.save(data)
+        login(request, new_user)
         return HttpResponseRedirect("/")
     else:
         print(form.errors)

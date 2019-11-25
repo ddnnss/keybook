@@ -14,10 +14,10 @@
             </div>
             <div class="header-nav header-nav-dark">
                 <ul class="nav wrapper">
-                    <li><a  href="#">арендовать помещение</a></li>
+                    <li><a  href="{% url 'search' %}">арендовать помещение</a></li>
                     <li><a href="#">о нас</a></li>
                     <li><a href="#">вы арендадатель ?</a></li>
-                    <li><a href="#">смотреть на карте</a></li>
+                    <li><a href="{% url 'search' %}">смотреть на карте</a></li>
                     <li><a href="#">контакты</a></li>
                     <!--li class="with-separator"><a href="#">контакты</a></li-->
                     {% if not request.user.is_authenticated %}
