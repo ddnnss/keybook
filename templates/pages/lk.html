@@ -1,0 +1,132 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}
+    {{ block.super }} - Просмотр предложения
+{% endblock %}
+
+
+{% block content %}
+{% include 'header-no-bg.html' %}
+
+<section class="lk-user">
+        <div class="container lk-user-inner">
+            {% if curUser.avatar %}
+                   <img width="200" src="{{ curUser.avatar.url }}">
+            {% else %}
+                   <img src="http://placehold.it/200">
+            {% endif %}
+
+            <p>{{ curUser.fio }}</p>
+        </div>
+
+    </section>
+    <section class="lk-tab">
+        <div class="container">
+            <div class="tab">
+                <button class="tablinks active" onclick="openTab(event, 'info')">мои данные</button>
+                <button class="tablinks" onclick="openTab(event, 'settings')">мои настройки</button>
+                <button class="tablinks" onclick="openTab(event, 'favorites')">избранное</button>
+                <button class="tablinks" onclick="openTab(event, 'history')">история</button>
+
+                <button class="tablinks" {% if not curUser.isOfferRent %}disabled{% endif %} onclick="openTab(event, 'houses')">мои помещения</button>
+                <button class="tablinks" {% if not curUser.isOfferRent %}disabled{% endif %} onclick="openTab(event, 'active-rent')">активные аренды</button>
+
+            </div>
+
+            <div id="info" class="tab-content" style="display: block">
+
+                    <form action="{% url 'update_req' %}" method="post" class="lk-tab-info" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="lk-tab-info-left">
+
+                           <p class="filter-separator tab-filter">основные данные</p>
+                            <div class="lk-tab-block">
+                                <input type="text" placeholder="ваше ф.и.о" name="{{ updateForm.fio.name }}" value="{{ curUser.fio }}">
+                                <input type="text" placeholder="ваше Email" name="{{ updateForm.email.name }}" value="{{ curUser.email }}">
+                                <input type="text" placeholder="ваш телефон" name="{{ updateForm.phone.name }}" value="{{ curUser.phone }}">
+                                <input type="text" placeholder="ваша профессия" name="{{ updateForm.profession.name }}" value="{{ curUser.profession }}">
+                                <input type="text" placeholder="ваше оборазование" name="{{ updateForm.study.name }}" value="{{ curUser.study }}">
+                                 <input type="text" placeholder="ваше хобби" name="{{ updateForm.hobby.name }}" value="{{ curUser.hobby }}">
+                                <label for="ava">
+                                    {% if curUser.avatar %}
+                                      изменить фото профиля <img width="50"  src="{{ curUser.avatar.url }}">
+                                {% else %}
+                                      фото профиля не установлено
+                                {% endif %}
+                                     <input id="ava" name="{{ updateForm.avatar.name }}" type="file">
+                                </label>
+
+                            </div>
+                    </div>
+
+                    <div class="tab-info-right">
+                        <p class="filter-separator tab-filter">ИНТЕРЕСЫ</p>
+                        <textarea placeholder="напишите тут о себе" name="{{ updateForm.info.name }}">{{ curUser.info }}</textarea>
+
+
+                    </div>
+
+
+                    <button type="submit" class="btn btn-sm btn-filled">внести изменения</button>
+                    </form>
+
+
+            </div>
+
+            <div id="settings" class="tab-content">
+               настройки
+            </div>
+
+            <div id="favorites" class="tab-content">
+                 <div class=" best-offers-inner">
+            <div class="best-offers-item">
+                <div class="best-offers-item__image" style="background: url(images/small-item.jpg); cursor: pointer">
+                    <span>2000 руб/сутки</span>
+                    <div class="best-offers-item__star">
+                        <b>&#9733;</b>
+                        <b></b>
+                    </div>
+                </div>
+                <div class="best-offers-item__info">
+                    <div class="best-offers-item__info-left">
+                        <p><a href="#">Lorem ipsum dolor.</a></p>
+                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quisquam.</span>
+                    </div>
+
+                </div>
+                <a class="add-btn" href="#">убрать из избранного</a>
+            </div><!--//best-offers-item -->
+
+            <div class="best-offers-item">
+                <div class="best-offers-item__image" style="background: url(images/small-item.jpg); cursor: pointer">
+                    <span>2000 руб/сутки</span>
+                    <div class="best-offers-item__star">
+                        <b class="in-fav">&#9733;</b>
+                        <b>4.5</b>
+                    </div>
+                </div>
+                <div class="best-offers-item__info">
+                    <div class="best-offers-item__info-left">
+                        <p><a href="#">Lorem ipsum dolor.</a></p>
+                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quisquam.</span>
+                    </div>
+                </div>
+            </div><!--//best-offers-item -->
+
+
+        </div><!--//best-offers-best-offers-inner -->
+            </div>
+            <div id="history" class="tab-content">
+              история
+            </div>
+            <div id="houses" class="tab-content">
+               мои дома
+            </div>
+            <div id="active-rent" class="tab-content">
+              активные аренды
+            </div>
+        </div>
+
+    </section>
+
+
+{% endblock %}

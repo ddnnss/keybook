@@ -1,0 +1,122 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}
+    {{ block.super }} - Главная
+{% endblock %}
+
+
+{% block content %}
+{% include 'header-bg.html' %}
+    <section class="categories">
+  <div class="container categories-inner">
+    <div class="categories-item square" style="background: url(http://placehold.it/270x290)">
+      <div class="categories-item-overlay"></div>
+      <p>Lorem </p>
+    </div>
+    <div class="categories-item square" style="background: url(http://placehold.it/270x290)">
+       <div class="categories-item-overlay"></div>
+      <p>Название</p>
+    </div>
+    <div class="categories-item square-big" style="background: url(http://placehold.it/560x600); grid-column: 3/5; grid-row: 1/3;">
+       <div class="categories-item-overlay"></div>
+      <p>Lorem ipsum dolor.</p>
+    </div>
+      <div class="categories-item square" style="background: url(http://placehold.it/270x290)">
+         <div class="categories-item-overlay"></div>
+      <p>Название</p>
+    </div>
+      <div class="categories-item long" style="background: url(http://placehold.it/550x290);  grid-column: 1/3; grid-row: 2/4;">
+         <div class="categories-item-overlay"></div>
+      <p>Название</p>
+    </div>
+      <div class="categories-item square" style="background: url(http://placehold.it/270x290)">
+         <div class="categories-item-overlay"></div>
+      <p>Lorem ipsum.</p>
+    </div>
+  </div>
+
+</section>
+
+<section class="choose">
+  <div class="container choose-wrapper">
+    <div class="choose-common choose-on-map">
+      <div class="choose-overlay"></div>
+      <a href="#">смотреть на карте</a>
+    </div>
+    <div class="choose-common choose-rent">
+      <div class="choose-overlay"></div>
+    <a href="{% url 'login' %}">сдать свое помещение</a>
+    </div>
+
+  </div>
+</section>
+
+<section class="best-offers">
+  <div class="container" >
+    <div class="section-header">
+      <h3><span>лучшие</span> предложения для вас</h3>
+    </div>
+    <div class=" best-offers-inner">
+        {% for house in allHouses %}
+         <div class="best-offers-item">
+        <div class="best-offers-item__image" style="background: url({{ house.image.url }}); cursor: pointer">
+          <span>{{ house.price }} руб/сутки</span>
+          <div class="best-offers-item__star">
+              <b>&#9733;</b>
+              <b></b>
+            </div>
+        </div>
+        <div class="best-offers-item__info">
+          <div class="best-offers-item__info-left">
+            <p><a href="{% url 'product' house.name_slug %}">{{ house.name }}</a></p>
+          <span>{{ house.short_description }}</span>
+          </div>
+        </div>
+      </div><!--//best-offers-item -->
+        {% endfor %}
+
+
+
+
+
+
+    </div><!--//best-offers-best-offers-inner -->
+
+  </div>
+
+</section>
+
+
+
+<section class="blog-news">
+  <div class="container" >
+    <div class="section-header">
+      <h3><span>новости</span> и наш блог</h3>
+    </div>
+    <div class="blog-news-inner">
+
+        {% for news in allNews %}
+         <div class="blog-news-item">
+        <div class="blog-news-item__image" style="background: url({{ news.image.url }})">
+
+        </div>
+        <div class="blog-news-item__info">
+          <p>{{ news.name }}</p>
+          <span>{{ news.short_description }}</span>
+          <span>01.10.19</span>
+            {% for tag in news.tags.all %}
+               <a class="btn " style="padding: 5px;    display: inline-block;    font-size: 10px;"> {{ tag.name }} </a>
+            {% endfor %}
+        </div>
+      </div><!--//blog-news-item -->
+        {% endfor %}
+
+
+
+
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

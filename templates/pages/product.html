@@ -1,0 +1,99 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}
+    {{ block.super }} - Просмотр предложения
+{% endblock %}
+
+
+{% block content %}
+{% include 'header-no-bg.html' %}
+   <section class="page-header">
+    <div class="page-header-inner">
+         <div class="page-header-inner-header">
+           <h1>{{ house.name }}</h1>
+            <p>{{ house.price }} руб/час<span>5000 руб/посуточно</span></p>
+
+        </div>
+
+        <ul class="breadcrumbs">
+            <li><a href="/">главная</a></li>
+            <li>{{ house.name }}</li>
+        </ul>
+    </div>
+</section>
+    <section class="product-owner">
+        <div class="container product-owner-inner">
+            <div class="product-owner-info">
+                 <img width="50" src="{{ house.client.avatar.url }}" alt="">
+                <p>
+                    {{ house.client.fio }}
+                <b>&#9733;</b>
+                <span>4.4</span>
+                </p>
+            </div>
+            <div class="product-owner-buttons">
+                <a href="#">НАПИСАТЬ ВЛАДЕЛЬЦУ</a>
+                <a href="#">ПОКАЗАТЬ НА КАРТЕ</a>
+                <a href="#">В ИЗБРАННОЕ</a>
+                <a href="#">ЗАБРОНИРОВАТЬ</a>
+            </div>
+
+
+        </div>
+
+    </section>
+
+    <section class="product">
+        <div class="container product-inner">
+            <div class="product-image">
+
+                {% for image in house.housephotos_set.all %}
+                    {% if forloop.counter == 1 %}
+
+                        <img src=" {{ image.image.url }}">
+                    {% endif %}
+                     <img class="product-image-thumb" src=" {{ image.image.url }}">
+                {% endfor %}
+
+
+            </div>
+            <div class="product-calendar">
+
+            </div>
+        </div>
+    </section>
+    <section class="product-info">
+        <div class="container product-info-inner">
+            <div class="product-info-inner-left">
+             <p class="filter-separator full-row">основные данные объекта</p>
+
+            <input type="text" class="full-row" disabled  value="{{ house.client.fio }}">
+            <input type="text"  disabled value="GMT+3">
+            <input type="text"  disabled value="{{ house.address }}">
+           <textarea class="full-row" disabled placeholder="напишите тут о своих интересах и увлечениях">{{ house.info }}</textarea>
+
+        </div>
+            <div class="product-info-inner-right">
+                 <p class="filter-separator full-row">другие параметры</p>
+
+                {% for filter in filterValues %}
+                    {% if filter.value  %}
+                    <p class="filter-info"> {{ filter.filter.name }} : {{ filter.value }}</p>
+                     {% elif filter.boolValue %}
+                    <p class="filter-info"> {{ filter.filter.name }} : ДА</p>
+                    {% else %}
+                        <p class="filter-info"> {{ filter.filter.name }} : НЕТ</p>
+                    {% endif %}
+                {% endfor %}
+
+
+
+        </div>
+
+        </div>
+
+    </section>
+
+
+
+{% endblock %}

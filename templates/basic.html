@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{% block title %}KEYBOOK{% endblock %}</title>
+
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+{% block content %}
+{% endblock %}
+{% include 'footer.html' %}
+<script>
+    function openTab(evt, tabName, tab) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        if (tab){
+            document.getElementById(tab).classList.add('active')
+            document.getElementById(`${tab}-btn`).classList.add('active')
+        }else{
+          evt.currentTarget.className += " active";
+        }
+
+    }
+</script>
+</body>
+</html>

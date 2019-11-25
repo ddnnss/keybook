@@ -1,0 +1,113 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}
+    {{ block.super }} - Просмотр предложения
+{% endblock %}
+
+
+{% block content %}
+<header class="header-no-bg">
+    <div class=" header-wrapper ">
+        <div class="container wrapper">
+            <div class="grid-item header-logo header-logo-dark">
+                <a href="/">keybook</a>
+            </div>
+            <div class="header-nav header-nav-dark">
+                <ul class="nav wrapper">
+                    <li><a  href="#">арендовать помещение</a></li>
+                    <li><a href="#">о нас</a></li>
+                    <li><a href="#">вы арендадатель ?</a></li>
+                    <li><a href="#">смотреть на карте</a></li>
+                    <li><a href="#">контакты</a></li>
+                    <!--li class="with-separator"><a href="#">контакты</a></li-->
+                    {% if not request.user.is_authenticated %}
+            <li><a href="{% url 'login' %}">вход/регистрация</a></li>
+            {% else %}
+                <li><a href="{% url 'lk' %}">личный кабинет</a></li>
+            {% endif %}
+                </ul>
+
+            </div>
+        </div>
+
+    </div><!-- end header-wrapper -->
+    <div class="container header-inner">
+
+
+
+                   <div class="login-tabs">
+                <div class="tab ">
+                    <button class="tablinks active" onclick="openTab(event, 'login')">вход</button>
+                    <button class="tablinks" id="register-btn" onclick="openTab(event, 'register')">регистрация</button>
+                </div>
+
+                <div id="login" class="tab-content" style="display: block">
+
+                    <form action="{% url 'login_req' %}" method="post">{% csrf_token %}
+                        <input type="text" name="email" placeholder="введите email">
+                        <input type="password" name="password" placeholder="введите пароль">
+                        <label class="custom-check-box"><span>запомнить данные</span>
+                            <input type="checkbox" >
+                            <span class="checkmark"></span>
+                        </label>
+                        <button type="submit" class="btn btn-filled">отправить</button>
+                    </form>
+                    {% if messages %}
+                    {% for message in messages %}
+                         <div style="display: block" class="form-errors">
+                        <p>{{ message }}</p>
+                    </div>
+
+                    {% endfor %}
+                {% endif %}
+
+
+                </div>
+
+                <div id="register" class="tab-content" >
+                     <form action="{% url 'reg_req' %}" method="post">{% csrf_token %}
+                        <input type="text" name="{{ form.email.name }}" required placeholder="ваш email">
+                         <input type="text" name="{{ form.phone.name }}" required placeholder="ваш телефон">
+                        <input type="password"  name="{{ form.password1.name }}" required placeholder="введите пароль">
+                          <input type="password"  name="{{ form.password2.name }}" required placeholder="повторите пароль">
+                        <label class="custom-check-box"><span>вы арендадатель?</span>
+                            <input type="checkbox"  name="{{ form.isOfferRent.name }}">
+                            <span class="checkmark"></span>
+                        </label>
+                        <button type="submit" class="btn btn-filled">отправить</button>
+                         <p>нажимая на кнопку отправить я автоматически соглашаюсь с <br><a href="#">договором оферты</a> и принимаю все условия</p>
+                    </form>
+                      {% if messages %}
+                    {% for message in messages %}
+                         <div style="display: block" class="form-errors">
+                        <p>{{ message }}</p>
+                    </div>
+
+                    {% endfor %}
+                {% endif %}
+                </div>
+            </div>
+
+
+
+
+
+
+    </div>
+
+
+
+
+</header>
+<script>
+  function ready() {
+    let param = window.location.search.substr(1)
+      console.log(param)
+      if (param === 'tab=reg'){
+        openTab(event, 'register','register')
+      }
+  }
+
+  document.addEventListener("DOMContentLoaded", ready);
+</script>
+{% endblock %}
