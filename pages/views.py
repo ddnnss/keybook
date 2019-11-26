@@ -1,11 +1,14 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
-
+from django.db.models import Q
 from django.contrib import messages
 from .models import *
 from filter.models import *
 from customuser.forms import *
 from django.contrib.auth import authenticate,logout,login
+from .forms import HouseForm
+from filter.models import *
+
 
 def index(request):
     allNews = News.objects.filter(isShowAtIndex=True)
@@ -28,6 +31,38 @@ def login_page(request):
     return render(request, 'pages/login.html', locals())
 
 def search(request):
+    allTowns = Town.objects.all()
+    allTypes = HouseCategory.objects.all()
+    products = House.objects.all()
+    anchor = ''
+    searchResult = None
+    filtered = False
+    if request.GET.get('town') and request.GET.get('type'):
+        searchResult = products.filter(Q(town_id=request.GET.get('town')) & Q(category_id=request.GET.get('type')))
+        anchor = 'results'
+        filtered = True
+    elif request.GET.get('town'):
+        searchResult= products.filter(town_id=request.GET.get('town'))
+        anchor = 'results'
+        filtered = True
+    elif request.GET.get('type'):
+        searchResult = products.filter(category_id=request.GET.get('type'))
+        anchor = 'results'
+        filtered = True
+
+    if filtered:
+        result = searchResult
+    else:
+        result = products
+
+    if request.GET.get('price_from') and request.GET.get('price_to'):
+        allProduct  = result.filter(Q(price__gte=request.GET.get('price_from')) & Q(price__lte=request.GET.get('price_to')))
+    elif request.GET.get('price_from'):
+        allProduct = result.filter(price__gte=request.GET.get('price_from'))
+    elif request.GET.get('price_to'):
+        allProduct = result.filter(price__lte=request.GET.get('price_to'))
+    else:
+        allProduct = result
 
     return render(request, 'pages/search.html', locals())
 
@@ -75,6 +110,41 @@ def update_req(request):
     return HttpResponseRedirect("/lk")
 
 def lk(request):
+    allTypes = HouseCategory.objects.all()
+    allTowns = Town.objects.all()
+
+    form = HouseForm()
     updateForm = UpdateForm()
     curUser = request.user
+    myHouses = House.objects.filter(client=curUser)
     return render(request, 'pages/lk.html', locals())
+
+
+def addhouse(request):
+    print(request.POST)
+
+    form = HouseForm(request.POST, request.FILES)
+    if not form.errors:
+        newhouse = form.save()
+        for f in request.FILES.getlist('images'):
+            print(f)
+            HousePhotos.objects.create(house=newhouse,image=f)
+
+    return HttpResponseRedirect("/lk")
+
+def addfilter(request,id):
+    house = House.objects.get(id=id)
+    filters = CategoryFilter.objects.filter(category=house.category)
+    return render(request, 'pages/addfilter.html', locals())
+
+def addfilter_req(request):
+    print(request.POST)
+    for x in request.POST:
+
+        if not x == 'csrfmiddlewaretoken' and not x == 'house':
+            print('filter_id=',str(x).split('-')[1])
+            print('value=',request.POST[x])
+            print('house_id=',request.POST.get('house'))
+
+            FilterValue.objects.create(value=request.POST[x],house_id=request.POST.get('house'), filter_id=str(x).split('-')[1])
+    return HttpResponseRedirect("/product/{}".format(House.objects.get(id=request.POST.get('house')).name_slug))

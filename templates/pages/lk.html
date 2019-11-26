@@ -79,7 +79,7 @@
             <div id="favorites" class="tab-content">
                  <div class=" best-offers-inner">
             <div class="best-offers-item">
-                <div class="best-offers-item__image" style="background: url(images/small-item.jpg); cursor: pointer">
+                <div class="best-offers-item__image" style="background: url(http://placehold.it/300); cursor: pointer">
                     <span>2000 руб/сутки</span>
                     <div class="best-offers-item__star">
                         <b>&#9733;</b>
@@ -97,7 +97,7 @@
             </div><!--//best-offers-item -->
 
             <div class="best-offers-item">
-                <div class="best-offers-item__image" style="background: url(images/small-item.jpg); cursor: pointer">
+                <div class="best-offers-item__image" style="background: url(http://placehold.it/300); cursor: pointer">
                     <span>2000 руб/сутки</span>
                     <div class="best-offers-item__star">
                         <b class="in-fav">&#9733;</b>
@@ -118,17 +118,16 @@
             <div id="history" class="tab-content">
               история
             </div>
-            <div id="houses" class="tab-content">
-                     <div class="all-houses-tab ">
+        <div id="houses" class="tab-content" style="height: 100vh">
+            <div id="allhouses" class="all-houses-tab tab-visible">
                 <div class=" best-offers-inner">
-                    <div class="add-house">
-                        <a href="#">+</a>
-
-
+                    <div  class="add-house">
+                        <a href="javascript: (void 0);" style="z-index: 10" onclick="showAdd()">+</a>
                     </div>
+                    {% for house in myHouses %}
                     <div class="best-offers-item">
-                        <div class="best-offers-item__image" style="background: url(images/small-item.jpg); cursor: pointer">
-                            <span>2000 руб/сутки</span>
+                        <div class="best-offers-item__image" style="background: url({{ house.image.url }}); background-size: cover">
+                            <span>{{ house.price }} руб/сутки</span>
                             <div class="best-offers-item__star">
                                 <b>&#9733;</b>
                                 <b></b>
@@ -136,95 +135,68 @@
                         </div>
                         <div class="best-offers-item__info">
                             <div class="best-offers-item__info-left">
-                                <p><a href="#">Lorem ipsum dolor.</a></p>
-                                <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quisquam.</span>
+                                <p><a href="{% url 'product' house.name_slug %}">{{ house.name }}</a></p>
+                                <span>{{ house.short_description }}</span>
                             </div>
 
                         </div>
-                        <a class="add-btn" href="#">удалить</a>
-                        <a class="add-btn" href="#">сделать неактивным</a>
-                    </div><!--//best-offers-item -->
+                        <a class="add-btn" href="{% url 'addfilter' house.id %}">добавить фильтры</a>
 
+                    </div><!--//best-offers-item -->
+                    {% endfor %}
 
 
 
                 </div><!--//best-offers-best-offers-inner -->
             </div>
-            <div class="add-house-tab tab-visible">
-                <form class="add-house-tab-form">
-                    <input type="text" placeholder="НАЗВАНИЕ ПОМЕЩЕНИЯ">
-                    <input type="text" placeholder="РАСПОЛОЖЕНИЕ (АДРЕС)">
-                    <input type="text" placeholder="СТОИМОСТЬ ПОСУТОЧНОЙ АРЕНДЫ">
-                      <div class="select-box">
-                        <div class="select-box__current" tabindex="1">
-                            <div class="select-box__value">
-                                <input class="select-box__input" type="radio" id="cat-0" value="1" name="Ben" checked="checked"/>
-                                <p class="select-box__input-text">регион 1</p>
-                            </div>
+            <div id="addhouse" class="add-house-tab ">
+                <form action="{% url 'addhouse' %}" method="post" class="add-house-tab-form" enctype="multipart/form-data">{% csrf_token %}
+                    <input name="{{ form.name.name }}" type="text" required placeholder="НАЗВАНИЕ ПОМЕЩЕНИЯ">
+                    <input name="{{ form.address.name }}" type="text" required placeholder="РАСПОЛОЖЕНИЕ (АДРЕС)">
+                    <input  name="{{ form.price.name }}" type="text" required placeholder="СТОИМОСТЬ ПОСУТОЧНОЙ АРЕНДЫ">
+                    <input name="{{ form.short_description.name }}" required type="text" placeholder="КОРОТКОЕ ОПИСАНИЕ">
+                    <select name="{{ form.town.name }}" required>
+                    <option selected disabled>ВЫБЕРИТЕ ГОРОД</option>
+                        {% for town in allTowns %}
+                            <option value="{{ town.id }}">{{ town.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="{{ form.category.name }}" required>
+                    <option selected disabled>ВЫБЕРИТЕ ТИП ПОМЕЩЕНИЯ</option>
+                         {% for type in allTypes %}
+                          <option value="{{ type.id }}">{{ type.name }}</option>
+                        {% endfor %}
+                    </select>
 
-                            <div class="select-box__value placeholder" >
-                                <input class="select-box__input" type="radio" id="cat-10000" value="5" name="Ben" checked="checked"/>
-                                <p class="select-box__input-text">КАТЕГОРИЯ ПОМЕЩЕНИЯ</p>
-                            </div><img class="select-box__icon" src="{% static 'images/close-icon.svg' %}" alt="Arrow Icon" aria-hidden="true"/>
-                        </div>
-                        <ul class="select-box__list">
-                            <li>
-                                <label class="select-box__option" for="cat-0" aria-hidden="aria-hidden">регион 1</label>
-                            </li>
+                    <textarea name="{{ form.info.name }}" placeholder="ОПИСАНИЕ ОБЪЕКТА" required></textarea>
 
-                            <li>
-                                <label class="select-box__option" for="cat-10000" aria-hidden="aria-hidden">КАТЕГОРИЯ ПОМЕЩЕНИЯ</label>
-                            </li>
-
-                        </ul>
-                    </div><!-- select-box -->
-                      <div class="select-box">
-                        <div class="select-box__current" tabindex="1">
-                            <div class="select-box__value">
-                                <input class="select-box__input" type="radio" id="town-0" value="1" name="town" checked="checked"/>
-                                <p class="select-box__input-text">регион 1</p>
-                            </div>
-
-                            <div class="select-box__value placeholder" >
-                                <input class="select-box__input" type="radio" id="town-10000" value="5" name="town" checked="checked"/>
-                                <p class="select-box__input-text">ВЫБОР ГОРОДА</p>
-                            </div><img class="select-box__icon" src="{% static 'images/close-icon.svg' %}" alt="Arrow Icon" aria-hidden="true"/>
-                        </div>
-                        <ul class="select-box__list">
-                            <li>
-                                <label class="select-box__option" for="town-0" aria-hidden="aria-hidden">регион 1</label>
-                            </li>
-
-                            <li>
-                                <label class="select-box__option" for="town-10000" aria-hidden="aria-hidden">ВЫБОР ГОРОДА</label>
-                            </li>
-
-                        </ul>
-                    </div><!-- select-box -->
-                    <textarea placeholder="ОПИСАНИЕ ОБЪЕКТА"></textarea>
+                    <input type="hidden"  name="{{ form.client.name }}" value="{{ curUser.id }}">
                     <div class="add-house-tab-form-image-buttons">
                         <label for="one_file">
                             <span>+</span>
                             <p>ПРЕВЬЮ</p>
-                            <input id="one_file" type="file">
+                            <input name="{{ form.image.name }}" id="one_file" type="file" required>
                         </label>
                          <label for="multuple_file">
                              <span>+</span>
                              <p>ФОТО ПОМЕЩЕНИЯ</p>
-                            <input id="multuple_file" type="file" multiple>
+                            <input name="images" id="multuple_file" type="file" multiple>
                         </label>
                     </div>
-
+                    <button class="btn btn-filled" type="submit">ОТПРАВИТЬ</button>
                 </form>
             </div>
 
-            </div>
+        </div>
             <div id="active-rent" class="tab-content">
               активные аренды
             </div>
         </div>
 
     </section>
+<script>
 
+
+</script>
 
 {% endblock %}

@@ -32,6 +32,41 @@
         }
 
     }
+
+      let filtersBlock = document.getElementsByClassName('search-filters')[0],
+        mapBlock = document.getElementsByClassName('search-map')[0],
+        bottomPanel = document.getElementsByClassName('search-panel-bottom')[0],
+        curActiveBlock = ''
+
+
+
+    function toggleBlock(block) {
+        curActiveBlock = block
+        if (curActiveBlock === 'filter'){
+            bottomPanel.classList.remove('panel-active')
+            mapBlock.style.display = 'none'
+            filtersBlock.style.display = 'block'
+            bottomPanel.classList.add('panel-active')
+        }
+         if (curActiveBlock === 'map'){
+            bottomPanel.classList.remove('panel-active')
+            mapBlock.style.display = 'block'
+            filtersBlock.style.display = 'none'
+            bottomPanel.classList.add('panel-active')
+        }
+
+
+
+    }
+
+     function showAdd() {
+        document.getElementById('allhouses').classList.remove('tab-visible')
+        document.getElementById('addhouse').classList.add('tab-visible')
+
+
+    }
+
+
 </script>
 </body>
 </html>

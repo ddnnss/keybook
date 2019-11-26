@@ -62,3 +62,11 @@ class User(AbstractUser):
 
     objects = UserManager()
 
+    def get_avatar(self):
+        if not self.avatar:
+            return 'http://placehold.it/200'
+        else:
+            return self.avatar.url
+
+
+

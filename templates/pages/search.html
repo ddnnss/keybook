@@ -108,83 +108,49 @@
                     </div><!-- select-box -->
                     <div class="select-box">
                         <div class="select-box__current" tabindex="1">
+                            {% for town in allTowns %}
                             <div class="select-box__value">
-                                <input class="select-box__input" type="radio" id="01" value="1" name="Ben1" checked="checked"/>
-                                <p class="select-box__input-text">город 1</p>
+                                <input class="select-box__input" type="radio" id="town-{{ town.id }}" value="{{ town.name }}" name="town" />
+                                <p class="select-box__input-text">{{ town.name }}</p>
                             </div>
-                            <div class="select-box__value">
-                                <input class="select-box__input" type="radio" id="11" value="2" name="Ben1" checked="checked"/>
-                                <p class="select-box__input-text">город 2</p>
-                            </div>
-                            <div class="select-box__value">
-                                <input class="select-box__input" type="radio" id="21" value="3" name="Ben1" checked="checked"/>
-                                <p class="select-box__input-text">город 3</p>
-                            </div>
-                            <div class="select-box__value">
-                                <input class="select-box__input" type="radio" id="31" value="4" name="Ben1" checked="checked"/>
-                                <p class="select-box__input-text">город 4</p>
-                            </div>
+                            {% endfor %}
                             <div class="select-box__value placeholder" >
-                                <input class="select-box__input" type="radio" id="41" value="5" name="Ben1" checked="checked"/>
+                                <input class="select-box__input" type="radio" id="townn" value="5" name="town" checked="checked"/>
                                 <p class="select-box__input-text">ВЫБОР ГОРОДА</p>
                             </div><img class="select-box__icon" src="{% static 'images/close-icon.svg' %}" alt="Arrow Icon" aria-hidden="true"/>
                         </div>
                         <ul class="select-box__list">
-                            <li>
-                                <label class="select-box__option" for="01" aria-hidden="aria-hidden">город 1</label>
+                              {% for town in allTowns %}
+                            <li data-town_id="{{ town.id }}" onclick="townSelect(this)">
+                                <label class="select-box__option" for="town-{{ town.id }}" aria-hidden="aria-hidden">{{ town.name }}</label>
                             </li>
+                             {% endfor %}
                             <li>
-                                <label class="select-box__option" for="11" aria-hidden="aria-hidden">город 2</label>
-                            </li>
-                            <li>
-                                <label class="select-box__option" for="21" aria-hidden="aria-hidden">город 3</label>
-                            </li>
-                            <li>
-                                <label class="select-box__option" for="31" aria-hidden="aria-hidden">город 4</label>
-                            </li>
-                            <li>
-                                <label class="select-box__option" for="41" aria-hidden="aria-hidden">ВЫБОР ГОРОДА</label>
+                                <label class="select-box__option" for="townn" aria-hidden="aria-hidden">ВЫБОР ГОРОДА</label>
                             </li>
                         </ul>
                     </div><!-- select-box -->
                     <div class="select-box">
                         <div class="select-box__current" tabindex="1">
+                              {% for type in allTypes %}
                             <div class="select-box__value">
-                                <input class="select-box__input" type="radio" id="011" value="1" name="Ben11" checked="checked"/>
-                                <p class="select-box__input-text">ТИП ПОМЕЩЕНИЯ 1</p>
+                                <input class="select-box__input" type="radio" id="type-{{ type.id }}" value="{{ type.name }}" name="type" />
+                                <p class="select-box__input-text">{{ type.name }}</p>
                             </div>
-                            <div class="select-box__value">
-                                <input class="select-box__input" type="radio" id="111" value="2" name="Ben11" checked="checked"/>
-                                <p class="select-box__input-text">ТИП ПОМЕЩЕНИЯ 2</p>
-                            </div>
-                            <div class="select-box__value">
-                                <input class="select-box__input" type="radio" id="211" value="3" name="Ben11" checked="checked"/>
-                                <p class="select-box__input-text">ТИП ПОМЕЩЕНИЯ 3</p>
-                            </div>
-                            <div class="select-box__value">
-                                <input class="select-box__input" type="radio" id="311" value="4" name="Ben11" checked="checked"/>
-                                <p class="select-box__input-text">ТИП ПОМЕЩЕНИЯ 4</p>
-                            </div>
+                            {% endfor %}
                             <div class="select-box__value placeholder" >
-                                <input class="select-box__input" type="radio" id="411" value="5" name="Ben11" checked="checked"/>
-                                <p class="select-box__input-text">ТИП ПОМЕЩЕНИЯ</p>
+                                <input class="select-box__input" type="radio" id="typee" value="5" name="type" checked="checked"/>
+                                <p class="select-box__input-text">ВЫБОР ПОМЕЩЕНИЯ</p>
                             </div><img class="select-box__icon" src="{% static 'images/close-icon.svg' %}" alt="Arrow Icon" aria-hidden="true"/>
                         </div>
                         <ul class="select-box__list">
-                            <li>
-                                <label class="select-box__option" for="011" aria-hidden="aria-hidden">ТИП ПОМЕЩЕНИЯ 1</label>
+                                 {% for type in allTypes %}
+                            <li data-type_id="{{ type.id }}" onclick="townType(this)">
+                                <label class="select-box__option" for="type-{{ type.id }}" aria-hidden="aria-hidden">{{ type.name }}</label>
                             </li>
+                             {% endfor %}
                             <li>
-                                <label class="select-box__option" for="111" aria-hidden="aria-hidden">ТИП ПОМЕЩЕНИЯ 2</label>
-                            </li>
-                            <li>
-                                <label class="select-box__option" for="211" aria-hidden="aria-hidden">ТИП ПОМЕЩЕНИЯ 3</label>
-                            </li>
-                            <li>
-                                <label class="select-box__option" for="311" aria-hidden="aria-hidden">ТИП ПОМЕЩЕНИЯ 4</label>
-                            </li>
-                            <li>
-                                <label class="select-box__option" for="411" aria-hidden="aria-hidden">ТИП ПОМЕЩЕНИЯ</label>
+                                <label class="select-box__option" for="typee" aria-hidden="aria-hidden">ВЫБОР ПОМЕЩЕНИЯ</label>
                             </li>
                         </ul>
                     </div><!-- select-box -->
@@ -199,8 +165,8 @@
                 <div class="search-right-controls">
                     <div class="search-right-controls_input-group">
                         <span>цена:</span>
-                        <input type="text" placeholder="от">
-                        <input type="text" placeholder="до">
+                        <input id="price_from" type="text" placeholder="от">
+                        <input id="price_to" type="text" placeholder="до">
 
                     </div>
                     <div class="search-right-controls_input-group">
@@ -209,7 +175,7 @@
                         <input type="text" placeholder="до">
 
                     </div>
-                    <a href="#" class="btn btn-filled">Поиск</a>
+                    <a href="javascript:(void 0);" onclick="sendForm()" class="btn btn-filled">Поиск</a>
 
                 </div>
 
@@ -307,15 +273,16 @@
 
 </header>
 
-<section class="best-offers">
+<section id="results" class="best-offers">
     <div class="container" >
         <div class="section-header">
-            <h3><span>лучшие</span> предложения для вас</h3>
+            <h3><span>результаты</span> поиска</h3>
         </div>
         <div class=" best-offers-inner">
+            {% for house in allProduct %}
             <div class="best-offers-item">
-                <div class="best-offers-item__image" style="background: url(images/small-item.jpg); cursor: pointer">
-                    <span>2000 руб/сутки</span>
+                <div class="best-offers-item__image" style="background: url({{ house.image.url }}); background-size: cover">
+                    <span>{{ house.price }} руб/сутки</span>
                     <div class="best-offers-item__star">
                         <b>&#9733;</b>
                         <b></b>
@@ -323,27 +290,13 @@
                 </div>
                 <div class="best-offers-item__info">
                     <div class="best-offers-item__info-left">
-                        <p><a href="#">Lorem ipsum dolor.</a></p>
-                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quisquam.</span>
+                        <p><a href="{%  url 'product' house.name_slug %}">{{ house.name }}</a></p>
+                        <span>{{ house.short_description }}</span>
                     </div>
                 </div>
             </div><!--//best-offers-item -->
+            {% endfor %}
 
-            <div class="best-offers-item">
-                <div class="best-offers-item__image" style="background: url(images/small-item.jpg); cursor: pointer">
-                    <span>2000 руб/сутки</span>
-                    <div class="best-offers-item__star">
-                        <b class="in-fav">&#9733;</b>
-                        <b>4.5</b>
-                    </div>
-                </div>
-                <div class="best-offers-item__info">
-                    <div class="best-offers-item__info-left">
-                        <p><a href="#">Lorem ipsum dolor.</a></p>
-                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quisquam.</span>
-                    </div>
-                </div>
-            </div><!--//best-offers-item -->
 
 
         </div><!--//best-offers-best-offers-inner -->
@@ -352,6 +305,43 @@
 
 </section>
 
+<script>
+    {% if anchor %}
+        window.location = '#{{ anchor }}'
+    {% endif %}
+let selectedTown = 0
+    let selectedType = 0
+    let query='/search?'
+    function townSelect(el) {
+    selectedTown = el.dataset.town_id
+        console.log(selectedTown)
+    }
+    function townType(el) {
+    selectedType = el.dataset.type_id
+        console.log(selectedTown)
+    }
 
+    function sendForm() {
+    if (selectedTown){
+        query+= `town=${selectedTown}`
+    }
+     if (selectedType){
+        query+= `&type=${selectedType}`
+    }
+
+    let priceFrom = document.getElementById('price_from').value
+    let   priceTo = document.getElementById('price_to').value
+
+        if (priceFrom){
+        query+= `&price_from=${priceFrom}`
+    }
+       if (priceTo){
+        query+= `&price_to=${priceTo}`
+    }
+    window.location.replace(query);
+
+    }
+
+</script>
 
 {% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}
+    {{ block.super }} - Просмотр предложения
+{% endblock %}
+
+
+{% block content %}
+{% include 'header-no-bg.html' %}
+
+<section>
+
+<div style="margin-top: 100px" class="container">
+<h1 style="text-align: center; font: 25px 'Montserrat Bold';color: #646464 ">Добавление фильтров для {{ house.name }}</h1>
+<br>
+    <form action="{% url 'addfilter_req' %}" method="post">{% csrf_token %}
+
+    {% for filter in filters %}
+         <div style="margin-bottom: 20px" class="search-filters-block-items-left">
+            <label style="font: 14px 'Montserrat Bold';color: #646464">
+                {{ filter.name }} -
+                <input name="val-{{ filter.id }}">
+            </label>
+        </div>
+    {% endfor %}
+    <input type="hidden" name="house" value="{{ house.id }}">
+    <button style="margin-top: 30px" class="btn btn-sm btn-filled" type="submit">СОХРАНИТЬ</button>
+</form>
+</div>
+
+
+</section>
+
+
+
+
+{% endblock %}

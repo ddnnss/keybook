@@ -59,7 +59,7 @@
             <div class=" best-offers-inner">
                 {% for house in allHouses %}
                     <div class="best-offers-item">
-                        <div class="best-offers-item__image" style="background: url({{ house.image.url }}); cursor: pointer">
+                        <div class="best-offers-item__image" style="background: url({{ house.image.url }}); background-size: cover">
                             <span>{{ house.price }} руб/сутки</span>
                             <div class="best-offers-item__star">
                                 <b>&#9733;</b>
