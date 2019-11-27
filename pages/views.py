@@ -21,7 +21,14 @@ def index(request):
     return render(request, 'pages/index.html', locals())
 def product(request,slug):
     house = House.objects.get(name_slug=slug)
-
+    months = {'Январь':1,'Февраль':2,
+              'Март': 3, 'Апрель': 4,
+              'Май': 5, 'Июнь': 6,
+              'Июль': 7, 'Август': 8,
+              'Сентябрь': 9, 'Октябрь': 10,
+              'Ноябрь': 11, 'Декабрь': 12}
+    days = range(32)
+    rentdays = Rent.objects.filter(house=house)
     filters = CategoryFilter.objects.filter(category=house.category)
     images = HousePhotos.objects.filter(house=house)
 
@@ -124,6 +131,9 @@ def lk(request):
         allTowns = Town.objects.all()
         favs = Favorite.objects.filter(client=request.user)
 
+        rentByme = Rent.objects.filter(clientWhoRent=request.user)
+        whoHavehouse = Rent.objects.filter(clientWhoHaveHouse=request.user)
+
         form = HouseForm()
         updateForm = UpdateForm()
         curUser = request.user
@@ -185,4 +195,9 @@ def delfav(request,id):
 
 def addfav(request,id):
     Favorite.objects.create(client=request.user, house_id=id)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+def rent(request):
+    Rent.objects.create(clientWhoRent=request.user,clientWhoHaveHouse_id=request.GET.get('whh'), house_id=request.GET.get('h'),month=request.GET.get('m'),day=request.GET.get('d'))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))

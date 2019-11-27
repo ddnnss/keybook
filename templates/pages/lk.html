@@ -29,7 +29,7 @@
                 <button class="tablinks" onclick="openTab(event, 'history')">история</button>
 
                 <button class="tablinks" {% if not curUser.isOfferRent %}disabled{% endif %} onclick="openTab(event, 'houses')">мои помещения</button>
-                <button class="tablinks" {% if not curUser.isOfferRent %}disabled{% endif %} onclick="openTab(event, 'active-rent')">активные аренды</button>
+                <button class="tablinks"  onclick="openTab(event, 'active-rent')">активные аренды</button>
 
             </div>
 
@@ -84,7 +84,7 @@
                  <div class=" best-offers-inner">
                      {% for fav in favs %}
             <div class="best-offers-item">
-                <div class="best-offers-item__image" style="background: url(http://placehold.it/300); background-size: cover">
+                <div class="best-offers-item__image" style="background: url({{ fav.house.image.url }}); background-size: cover">
                     <span>2000 руб/сутки</span>
 
                 </div>
@@ -178,7 +178,48 @@
 
         </div>
             <div id="active-rent" class="tab-content">
-              активные аренды
+             <p class="filter-separator tab-filter">Аредновали у меня</p>
+            <div class=" best-offers-inner">
+                      {% for house in whoHavehouse %}
+                    <div class="best-offers-item">
+                        <div class="best-offers-item__image" style="background: url({{ house.house.image.url }}); background-size: cover">
+                            <span>Арендовано: {{ house.month }} {{ house.day }}</span>
+
+                        </div>
+                        <div class="best-offers-item__info">
+                            <div class="best-offers-item__info-left">
+                                <p><a href="{% url 'product' house.house.name_slug %}">{{ house.house.name }}</a></p>
+                                <span>Арендатор: {{ house.clientWhoRent.fio }}</span>
+                            </div>
+
+                        </div>
+
+
+                    </div><!--//best-offers-item -->
+                    {% endfor %}
+            </div>
+                <br><br><br>
+             <p class="filter-separator tab-filter">Аредновал я</p>
+            <div class=" best-offers-inner">
+                      {% for house in rentByme %}
+                    <div class="best-offers-item">
+                        <div class="best-offers-item__image" style="background: url({{ house.house.image.url }}); background-size: cover">
+                            <span>Арендовано: {{ house.month }} {{ house.day }}</span>
+
+                        </div>
+                        <div class="best-offers-item__info">
+                            <div class="best-offers-item__info-left">
+                                <p><a href="{% url 'product' house.house.name_slug %}">{{ house.house.name }}</a></p>
+
+                            </div>
+
+                        </div>
+
+
+                    </div><!--//best-offers-item -->
+                    {% endfor %}
+            </div>
+
             </div>
         </div>
 

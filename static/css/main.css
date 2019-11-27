@@ -148,6 +148,11 @@ a {
   color: inherit;
 }
 
+
+select option:disabled{
+  background: red;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

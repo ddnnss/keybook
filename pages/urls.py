@@ -20,6 +20,7 @@ urlpatterns = [
    path('addfav/<id>', views.addfav, name='addfav'),
    path('delfav/<id>', views.delfav, name='delfav'),
    path('edit/<id>', views.edit, name='edit'),
+   path('rent/', views.rent, name='rent'),
 
 
 

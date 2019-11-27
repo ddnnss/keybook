@@ -24,7 +24,7 @@
     <section class="product-owner">
         <div class="container product-owner-inner">
             <div class="product-owner-info">
-                 <img width="50" src="{{ house.client.get_avatar }}" alt="">
+                 <img style="width: 50px;height: 50px" src="{{ house.client.get_avatar }}" alt="">
                 <p>
                     {{ house.client.fio }}
                 <b>&#9733;</b>
@@ -35,7 +35,7 @@
                 <a href="#">НАПИСАТЬ ВЛАДЕЛЬЦУ</a>
                 <a href="#">ПОКАЗАТЬ НА КАРТЕ</a>
                 <a href="#">В ИЗБРАННОЕ</a>
-                <a href="#">ЗАБРОНИРОВАТЬ</a>
+                <a onclick="rent()">ЗАБРОНИРОВАТЬ</a>
             </div>
 
 
@@ -57,7 +57,39 @@
 
 
             </div>
-            <div class="product-calendar">
+            <div style="align-items: start" class="product-calendar wrapper ">
+
+                <select style="width: 100%;
+  height: 50px;
+  border: 1px solid #c4c4c4;
+  padding: 5px 10px;
+  font: 14px 'Montserrat Bold',sans-serif;
+  color: #c4c4c4;
+  text-transform: uppercase;
+  text-align: center;"  id="mon" onchange="checkDays(this)">
+                <option selected disabled>Выберите месяц</option>
+                    {% for k,v in months.items %}
+                        <option value="{{ v }}">{{ k }}</option>
+                    {% endfor %}
+
+                </select>
+            <select style="width: 100%;
+  height: 50px;
+  border: 1px solid #c4c4c4;
+  padding: 5px 10px;
+  font: 14px 'Montserrat Bold',sans-serif;
+  color: #c4c4c4;
+  text-transform: uppercase;
+  text-align: center;" id="day">
+             <option selected disabled>Выберите день</option>
+                    {% for i in days %}
+
+                        {% if not forloop.counter == 1 %}
+                         <option class="dayyysss" id="day-{{ i }}" value="{{ i }}">{{ i }}</option>
+                        {% endif %}
+                    {% endfor %}
+
+                </select>
 
             </div>
         </div>
@@ -94,6 +126,61 @@
 
     </section>
 
+<script>
+let rentDays={}
+var arr=[]
+    {% for x in rentdays %}
+        cM = '{{ x.month }}'
+        if (cM in rentDays){
+            arr.push({{ x.day }})
+            rentDays['{{ x.month }}']=arr
+    }
+    else {
+            arr=[]
+            cM = '{{ x.month }}'
+            arr.push({{ x.day }})
+            rentDays['{{ x.month }}']=arr
+        }
 
+
+
+
+
+    {% endfor %}
+  console.log(rentDays)
+
+function checkDays(el) {
+        allD = document.getElementsByClassName('dayyysss')
+
+        for (x of allD){
+              console.log(x)
+              x.disabled = false
+            console.log(x)
+        }
+      let curM = el.options[el.selectedIndex].text
+    console.log(el.options[el.selectedIndex].text)
+    if (curM in rentDays){
+
+
+
+        console.log( rentDays[curM])
+        for (x of rentDays[curM]) {
+            console.log(x)
+            document.getElementById(`day-${x}`).disabled = true
+        }
+    }
+}
+
+function rent() {
+    var h = {{ house.id }}
+    var whh = {{ house.client.id }}
+    var m = document.getElementById("mon");
+    var mon = m.options[m.selectedIndex].text;
+     var d = document.getElementById("day");
+    var day = d.options[d.selectedIndex].text;
+    console.log(mon,day)
+     window.location.replace(`/rent?m=${mon}&d=${day}&h=${h}&whh=${whh}`);
+}
+</script>
 
 {% endblock %}

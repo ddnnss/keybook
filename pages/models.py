@@ -116,3 +116,20 @@ class HousePhotos(models.Model):
 class Favorite(models.Model):
     client = models.ForeignKey(User, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Клиент')
     house = models.ForeignKey(House, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Помещение')
+
+
+
+class Rent(models.Model):
+    clientWhoRent = models.ForeignKey(User, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Клиент',related_name='rentbyme')
+    clientWhoHaveHouse = models.ForeignKey(User, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Клиент',
+                                      related_name='whohavehouse')
+    house = models.ForeignKey(House, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Помещение')
+    month = models.CharField('Месяц',max_length=255, blank=False, null=True)
+    day = models.CharField('День',max_length=255, blank=False, null=True)
+
+    def __str__(self):
+        return 'аренда {}'.format(self.house.name)
+
+    class Meta:
+        verbose_name = "Аренда"
+        verbose_name_plural = "Аренды"
