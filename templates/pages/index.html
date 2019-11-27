@@ -8,7 +8,11 @@
 {% block content %}
     {% include 'header-bg.html' %}
     <section class="categories">
-        <div class="container categories-inner">
+    <div class="container">
+         <div class="section-header">
+                <h3><span>типы</span> помещений</h3>
+            </div>
+        <div class="categories-inner">
             <div class="categories-item square" style="background: url(http://placehold.it/270x290)">
                 <div class="categories-item-overlay"></div>
                 <p>Lorem </p>
@@ -35,6 +39,8 @@
             </div>
         </div>
 
+    </div>
+
     </section>
 
     <section class="choose">
@@ -45,7 +51,7 @@
             </div>
             <div class="choose-common choose-rent">
                 <div class="choose-overlay"></div>
-                <a href="{% url 'login' %}">сдать свое помещение</a>
+                <a href="{% url 'lk' %}">сдать свое помещение</a>
             </div>
 
         </div>
@@ -62,7 +68,9 @@
                         <div class="best-offers-item__image" style="background: url({{ house.image.url }}); background-size: cover">
                             <span>{{ house.price }} руб/сутки</span>
                             <div class="best-offers-item__star">
-                                <b>&#9733;</b>
+                                {% if request.user.is_authenticated and not house.id in allfavs%}
+                                    <b onclick="addfav({{ house.id }})">&#9733;</b>
+                                {% endif %}
                                 <b></b>
                             </div>
                         </div>
@@ -104,4 +112,11 @@
             </div>
         </div>
     </section>
+
+    <script>
+    function addfav(id) {
+        window.location.replace(`/addfav/${id}`);
+    }
+    </script>
+
 {% endblock %}

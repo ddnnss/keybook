@@ -11,7 +11,7 @@
     <div class="page-header-inner">
          <div class="page-header-inner-header">
            <h1>{{ house.name }}</h1>
-            <p>{{ house.price }} руб/час<span>5000 руб/посуточно</span></p>
+            <p>{{ house.price }} ₽ / сутки</p>
 
         </div>
 
@@ -67,10 +67,10 @@
             <div class="product-info-inner-left">
              <p class="filter-separator full-row">основные данные объекта</p>
 
-            <input type="text" class="full-row" disabled  value="{{ house.client.fio }}">
-            <input type="text"  disabled value="GMT+3">
-            <input type="text"  disabled value="{{ house.address }}">
-           <textarea class="full-row" disabled placeholder="напишите тут о своих интересах и увлечениях">{{ house.info }}</textarea>
+            <input style="background: #fff" type="text" class="full-row" disabled  value="{{ house.client.fio }}">
+            <input style="background: #fff" type="text"  disabled value="GMT+3">
+            <input style="background: #fff" type="text"  disabled value="{{ house.address }}">
+           <textarea style="background: #fff" class="full-row" disabled placeholder="напишите тут о своих интересах и увлечениях">{{ house.info }}</textarea>
 
         </div>
             <div class="product-info-inner-right">

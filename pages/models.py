@@ -3,6 +3,8 @@ from pytils.translit import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
 from customuser.models import User
 
+
+
 class Town(models.Model):
     name = models.CharField('Город', max_length=255, blank=True, null=True)
 
@@ -90,10 +92,10 @@ class House(models.Model):
 
 class CategoryFilter(models.Model):
     name = models.CharField('Фильтр помещения', max_length=255, blank=True, null=True)
-    category = models.ForeignKey(HouseCategory, blank=True, null=True,on_delete=models.CASCADE, verbose_name='Помещение')
+    category = models.ForeignKey(HouseCategory, blank=True, null=True,on_delete=models.CASCADE, verbose_name='Для категории помещения')
 
     def __str__(self):
-        return 'Фильтр помещения {} : {} '.format(self.category.name,self.name)
+        return 'Фильтр категории помещения {} : {} '.format(self.category.name,self.name)
 
     class Meta:
         verbose_name = "Фильтр помещения"
@@ -111,3 +113,6 @@ class HousePhotos(models.Model):
         verbose_name_plural = "Изображения помещений"
 
 
+class Favorite(models.Model):
+    client = models.ForeignKey(User, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Клиент')
+    house = models.ForeignKey(House, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Помещение')

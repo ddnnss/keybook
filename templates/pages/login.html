@@ -16,7 +16,7 @@
                 <ul class="nav wrapper">
                     <li><a  href="{% url 'search' %}">арендовать помещение</a></li>
                     <li><a href="#">о нас</a></li>
-                    <li><a href="#">вы арендадатель ?</a></li>
+                    <li><a href="#">вы арендодатель ?</a></li>
                     <li><a href="{% url 'search' %}">смотреть на карте</a></li>
                     <li><a href="#">контакты</a></li>
                     <!--li class="with-separator"><a href="#">контакты</a></li-->
@@ -70,7 +70,7 @@
                          <input type="text" name="{{ form.phone.name }}" required placeholder="ваш телефон">
                         <input type="password"  name="{{ form.password1.name }}" required placeholder="введите пароль">
                           <input type="password"  name="{{ form.password2.name }}" required placeholder="повторите пароль">
-                        <label class="custom-check-box"><span>вы арендадатель?</span>
+                        <label class="custom-check-box"><span>вы арендодатель?</span>
                             <input type="checkbox"  name="{{ form.isOfferRent.name }}">
                             <span class="checkmark"></span>
                         </label>

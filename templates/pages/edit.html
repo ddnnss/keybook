@@ -1,0 +1,52 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}
+    {{ block.super }} - Просмотр предложения
+{% endblock %}
+
+
+{% block content %}
+{% include 'header-no-bg.html' %}
+
+<section>
+
+<div style="margin-top: 100px" class="container">
+<h1 style="text-align: center; font: 25px 'Montserrat Bold';color: #646464 ">Редактирование {{ house.name }}</h1>
+<br>
+        <form action="{% url 'edithouse' %}" method="post" class="add-house-tab-form" enctype="multipart/form-data">{% csrf_token %}
+                    <input name="{{ form.name.name }}" type="text" value="{{ house.name }}" required placeholder="НАЗВАНИЕ ПОМЕЩЕНИЯ">
+                    <input name="{{ form.address.name }}" type="text" value="{{ house.address }}"  required placeholder="РАСПОЛОЖЕНИЕ (АДРЕС)">
+                    <input  name="{{ form.price.name }}" type="text" value="{{ house.price }}" required placeholder="СТОИМОСТЬ ПОСУТОЧНОЙ АРЕНДЫ">
+                    <input name="{{ form.short_description.name }}" value="{{ house.short_description }}" required type="text" placeholder="КОРОТКОЕ ОПИСАНИЕ">
+                    <select name="{{ form.town.name }}" required>
+                        {% for town in allTowns %}
+                            <option value="{{ town.id }}" {% if town.id == house.town.id %} selected{% endif %}>{{ town.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="{{ form.category.name }}" required>
+
+                         {% for type in allTypes %}
+                          <option value="{{ type.id }} {% if type.id == house.type.id %} selected{% endif %}">{{ type.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="hidden" name="id" value="{{ house.id }}">
+                    <textarea name="{{ form.info.name }}"  placeholder="ОПИСАНИЕ ОБЪЕКТА" required>{{ house.info }}</textarea>
+
+
+
+
+
+
+
+                    <button style="width: 100%" class="btn btn-filled" type="submit">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
+
+                </form>
+</div>
+
+
+</section>
+
+
+
+
+{% endblock %}

@@ -267,6 +267,7 @@ a {
 .page-header-inner {
   max-width: 1440px;
   margin: auto;
+  padding: 0 15px;
 }
 
 .page-header-inner-header {
@@ -1154,7 +1155,7 @@ textarea {
 .best-offers-item__info-left p {
   font: 14px "Montserrat Bold", sans-serif;
   color: #646464;
-  text-align: center;
+
 }
 
 .best-offers-item__info-left span {

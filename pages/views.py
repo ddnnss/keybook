@@ -6,13 +6,18 @@ from .models import *
 from filter.models import *
 from customuser.forms import *
 from django.contrib.auth import authenticate,logout,login
-from .forms import HouseForm
+from .forms import *
 from filter.models import *
 
 
 def index(request):
     allNews = News.objects.filter(isShowAtIndex=True)
     allHouses = House.objects.all()
+    allfavs = []
+    if request.user.is_authenticated:
+        favs = Favorite.objects.filter(client=request.user)
+        for x in favs:
+            allfavs.append(x.house.id)
     return render(request, 'pages/index.html', locals())
 def product(request,slug):
     house = House.objects.get(name_slug=slug)
@@ -29,6 +34,10 @@ def product(request,slug):
 def login_page(request):
     form = SignUpForm()
     return render(request, 'pages/login.html', locals())
+
+def logout_page(request):
+    logout(request)
+    return HttpResponseRedirect('/')
 
 def search(request):
     allTowns = Town.objects.all()
@@ -91,7 +100,7 @@ def reg_req(request):
     if not form.errors:
         new_user = form.save(data)
         login(request, new_user)
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect("/lk")
     else:
         print(form.errors)
         data, errors = {}, {}
@@ -110,14 +119,18 @@ def update_req(request):
     return HttpResponseRedirect("/lk")
 
 def lk(request):
-    allTypes = HouseCategory.objects.all()
-    allTowns = Town.objects.all()
+    if request.user.is_authenticated:
+        allTypes = HouseCategory.objects.all()
+        allTowns = Town.objects.all()
+        favs = Favorite.objects.filter(client=request.user)
 
-    form = HouseForm()
-    updateForm = UpdateForm()
-    curUser = request.user
-    myHouses = House.objects.filter(client=curUser)
-    return render(request, 'pages/lk.html', locals())
+        form = HouseForm()
+        updateForm = UpdateForm()
+        curUser = request.user
+        myHouses = House.objects.filter(client=curUser)
+        return render(request, 'pages/lk.html', locals())
+    else:
+        return render(request, 'pages/login.html', locals())
 
 
 def addhouse(request):
@@ -129,6 +142,23 @@ def addhouse(request):
         for f in request.FILES.getlist('images'):
             print(f)
             HousePhotos.objects.create(house=newhouse,image=f)
+
+    return HttpResponseRedirect("/lk")
+
+def edit(request,id):
+    allTypes = HouseCategory.objects.all()
+    allTowns = Town.objects.all()
+    house = House.objects.get(id=id)
+    form = HouseUpdateForm()
+    return render(request, 'pages/edit.html', locals())
+
+def edithouse(request):
+    print(request.POST)
+    house = House.objects.get(id=request.POST.get('id'))
+    form = HouseUpdateForm(request.POST, request.FILES, instance=house)
+    if not form.errors:
+        newhouse = form.save()
+
 
     return HttpResponseRedirect("/lk")
 
@@ -148,3 +178,11 @@ def addfilter_req(request):
 
             FilterValue.objects.create(value=request.POST[x],house_id=request.POST.get('house'), filter_id=str(x).split('-')[1])
     return HttpResponseRedirect("/product/{}".format(House.objects.get(id=request.POST.get('house')).name_slug))
+
+def delfav(request,id):
+    Favorite.objects.filter(id=id).delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+def addfav(request,id):
+    Favorite.objects.create(client=request.user, house_id=id)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))

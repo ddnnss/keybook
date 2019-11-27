@@ -46,11 +46,11 @@
                                 <input type="text" placeholder="ваша профессия" name="{{ updateForm.profession.name }}" value="{{ curUser.profession }}">
                                 <input type="text" placeholder="ваше оборазование" name="{{ updateForm.study.name }}" value="{{ curUser.study }}">
                                  <input type="text" placeholder="ваше хобби" name="{{ updateForm.hobby.name }}" value="{{ curUser.hobby }}">
-                                <label for="ava">
+                                <label for="ava" style="cursor: pointer">
                                     {% if curUser.avatar %}
                                       изменить фото профиля <img width="50"  src="{{ curUser.avatar.url }}">
                                 {% else %}
-                                      фото профиля не установлено
+                                      фото профиля не установлено! Кликните для установки
                                 {% endif %}
                                      <input id="ava" name="{{ updateForm.avatar.name }}" type="file">
                                 </label>
@@ -65,8 +65,12 @@
 
                     </div>
 
+                    <div class="wrapper">
+                         <a style="width: 100%" href="{% url 'logout' %}" class="btn btn-sm ">выход</a>
+                         <button style="width: 100%" type="submit" class="btn btn-sm btn-filled">внести изменения</button>
 
-                    <button type="submit" class="btn btn-sm btn-filled">внести изменения</button>
+                    </div>
+
                     </form>
 
 
@@ -78,13 +82,11 @@
 
             <div id="favorites" class="tab-content">
                  <div class=" best-offers-inner">
+                     {% for fav in favs %}
             <div class="best-offers-item">
-                <div class="best-offers-item__image" style="background: url(http://placehold.it/300); cursor: pointer">
+                <div class="best-offers-item__image" style="background: url(http://placehold.it/300); background-size: cover">
                     <span>2000 руб/сутки</span>
-                    <div class="best-offers-item__star">
-                        <b>&#9733;</b>
-                        <b></b>
-                    </div>
+
                 </div>
                 <div class="best-offers-item__info">
                     <div class="best-offers-item__info-left">
@@ -93,24 +95,10 @@
                     </div>
 
                 </div>
-                <a class="add-btn" href="#">убрать из избранного</a>
+                <a class="add-btn" href="{% url 'delfav' fav.id %}">убрать из избранного</a>
             </div><!--//best-offers-item -->
+            {% endfor %}
 
-            <div class="best-offers-item">
-                <div class="best-offers-item__image" style="background: url(http://placehold.it/300); cursor: pointer">
-                    <span>2000 руб/сутки</span>
-                    <div class="best-offers-item__star">
-                        <b class="in-fav">&#9733;</b>
-                        <b>4.5</b>
-                    </div>
-                </div>
-                <div class="best-offers-item__info">
-                    <div class="best-offers-item__info-left">
-                        <p><a href="#">Lorem ipsum dolor.</a></p>
-                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quisquam.</span>
-                    </div>
-                </div>
-            </div><!--//best-offers-item -->
 
 
         </div><!--//best-offers-best-offers-inner -->
@@ -128,19 +116,17 @@
                     <div class="best-offers-item">
                         <div class="best-offers-item__image" style="background: url({{ house.image.url }}); background-size: cover">
                             <span>{{ house.price }} руб/сутки</span>
-                            <div class="best-offers-item__star">
-                                <b>&#9733;</b>
-                                <b></b>
-                            </div>
+
                         </div>
                         <div class="best-offers-item__info">
                             <div class="best-offers-item__info-left">
                                 <p><a href="{% url 'product' house.name_slug %}">{{ house.name }}</a></p>
-                                <span>{{ house.short_description }}</span>
+
                             </div>
 
                         </div>
-                        <a class="add-btn" href="{% url 'addfilter' house.id %}">добавить фильтры</a>
+                        <a style="margin-bottom: 1px" class="add-btn" href="{% url 'addfilter' house.id %}">добавить фильтры</a>
+                        <a class="add-btn" href="{% url 'edit' house.id %}">редактировать</a>
 
                     </div><!--//best-offers-item -->
                     {% endfor %}
@@ -179,11 +165,14 @@
                         </label>
                          <label for="multuple_file">
                              <span>+</span>
-                             <p>ФОТО ПОМЕЩЕНИЯ</p>
+                             <p>ФОТО ПОМЕЩЕНИЯ<br><span style="font-size: 8px; text-align: center; display: block">можно выбрать несколько</span></p>
+
                             <input name="images" id="multuple_file" type="file" multiple>
                         </label>
                     </div>
-                    <button class="btn btn-filled" type="submit">ОТПРАВИТЬ</button>
+                <div style="width: 400px;" class="wrapper"> <a style="width: 100%" onclick="closeAdd()" class="btn" >НАЗАД</a>
+                    <button style="width: 100%" class="btn btn-filled" type="submit">ОТПРАВИТЬ</button></div>
+
                 </form>
             </div>
 
@@ -195,7 +184,10 @@
 
     </section>
 <script>
-
+    function closeAdd() {
+         document.getElementById('allhouses').classList.add('tab-visible')
+        document.getElementById('addhouse').classList.remove('tab-visible')
+    }
 
 </script>
 
