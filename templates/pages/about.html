@@ -1,0 +1,55 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}
+    {{ block.super }} - Просмотр предложения
+{% endblock %}
+
+
+{% block content %}
+{% include 'header-no-bg.html' %}
+
+<section class="container container-sm about-us">
+    <img style="margin-bottom: 25px" src="{% static 'images/about.jpg' %}">
+      <div class="section-header">
+      <h3><span>КОРОТКО:</span> О НАС</h3>
+    </div>
+    <div class="about-text">
+        <p> КАК найти помещение для занятий и консультаций с клиентом или учеником и потратить на это 2 минуты?</p>
+        <p> КАК быстро и легко сдать помещение на час?</p>
+        <p> КАК педагогу , врачу и социальному технологу найти клиентов и  группу клиентов ?</p>
+        <p> КАК клиенту найти проверенного врача или консультанта?</p>
+        <p> КАК найти коуча?</p>
+        <p> НАШ ответ : <span>KEYBOOK!</span></p>
+
+    </div>
+      <div  class="section-header">
+      <h3><span>ЦЕЛИ КОМПАНИИ: </span>ПРЕДОСТАВИТЬ</h3>
+    </div>
+    <div class="about-features">
+        <div class="about-features-item">
+            <img src="{% static 'images/usability.jpg' %}">
+            <p>УДОБСТВО</p>
+            <span>Решить проблему аренды и сдачи некоммерческой недвижимости по часам</span>
+        </div>
+         <div class="about-features-item">
+            <img src="{% static 'images/social.jpg' %}">
+            <p>ВОЗМОЖНОСТЬ</p>
+            <span>Найти специалиста или клиента, группу клиентов внутри одной социальной сети как отрыто, так и анонимно</span>
+        </div>
+         <div class="about-features-item">
+            <img src="{% static 'images/trust.jpg' %}">
+            <p>ДОВЕРИЕ</p>
+            <span>Безопасные и максимально точный осознанный выбор специалиста или группы по проблеме</span>
+        </div>
+    </div>
+    <img style="margin-bottom: 40px" src="{% static 'images/idea.jpg' %}">
+      <div  class="section-header">
+      <h3><span>КОНТАКТЫ ДЛЯ СВЯЗИ:</span></h3>
+    </div>
+    <p class="contacts-info">EMAIL:                  <span style="margin-left: 65px"> Info@KeyBook.com</span></p>
+    <p class="contacts-info">PHONE:                  <span >8(800)555-35-35</span></p>
+
+</section>
+
+
+{% endblock %}

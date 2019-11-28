@@ -30,9 +30,11 @@ class News(models.Model):
     tags = models.ManyToManyField(NewsTag, verbose_name='Теги', related_name='tags')
     name_slug = models.CharField(max_length=255, blank=True, null=True)
     image = models.ImageField('Изображение превью', upload_to='blog_img/', blank=True)
+    imageBig = models.ImageField('Изображение на страницу', upload_to='blog_img/', blank=True)
     short_description = models.CharField('Краткое описание (100 символов)', max_length=100, blank=False)
     description = RichTextUploadingField('Статья', blank=False, null=True)
     isShowAtIndex = models.BooleanField('Отображать на главной?', default=True)
+    created_at = models.CharField('Дата', max_length=255, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.name_slug = slugify(self.name)

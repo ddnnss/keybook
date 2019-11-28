@@ -3,11 +3,15 @@
         <div class="container wrapper">
             <div class="grid-item header-logo header-logo-dark">
                 <a href="/">keybook</a>
+                 <div class="header-languages">
+                    <p class="active">RU</p>
+                    <p style="color: #646464">USD</p>
+                </div>
             </div>
             <div class="header-nav header-nav-dark">
                 <ul class="nav wrapper">
                     <li><a  href="{% url 'search' %}">арендовать помещение</a></li>
-                    <li><a href="#">о нас</a></li>
+                    <li><a href="{% url 'about' %}">о нас</a></li>
                     <li><a href="#">вы арендодатель ?</a></li>
                     <li><a href="{% url 'search' %}">смотреть на карте</a></li>
                     <li><a href="#">контакты</a></li>

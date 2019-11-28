@@ -98,9 +98,9 @@
 
                         </div>
                         <div class="blog-news-item__info">
-                            <p>{{ news.name }}</p>
+                            <p><a href="{% url 'post' news.name_slug %}">{{ news.name }}</a></p>
                             <span>{{ news.short_description }}</span>
-                            <b>01.10.19</b>
+                            <b>{{ news.created_at }}</b>
                             <div class="blog-news-item__tags">
                                 {% for tag in news.tags.all %}
                                     <a class="btn btn-tag" > {{ tag.name }} </a>

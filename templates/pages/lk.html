@@ -77,7 +77,10 @@
             </div>
 
             <div id="settings" class="tab-content">
-               настройки
+                <label class="custom-check-box"><span>Получать Рассылку</span>
+                                    <input type="checkbox" checked="checked">
+                                    <span class="checkmark"></span>
+                                </label>
             </div>
 
             <div id="favorites" class="tab-content">
@@ -85,13 +88,13 @@
                      {% for fav in favs %}
             <div class="best-offers-item">
                 <div class="best-offers-item__image" style="background: url({{ fav.house.image.url }}); background-size: cover">
-                    <span>2000 руб/сутки</span>
+                    <span>{{ fav.house.price }} руб/сутки</span>
 
                 </div>
                 <div class="best-offers-item__info">
                     <div class="best-offers-item__info-left">
-                        <p><a href="#">Lorem ipsum dolor.</a></p>
-                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quisquam.</span>
+                       <p><a href="{% url 'product' fav.house.name_slug %}">{{ fav.house.name }}</a></p>
+
                     </div>
 
                 </div>
@@ -104,7 +107,9 @@
         </div><!--//best-offers-best-offers-inner -->
             </div>
             <div id="history" class="tab-content">
-              история
+              <div class="section-header">
+                  <h3><span>В РАЗРАБОТКЕ</span></h3>
+                </div>
             </div>
         <div id="houses" class="tab-content" style="height: 100vh">
             <div id="allhouses" class="all-houses-tab tab-visible">

@@ -42,6 +42,15 @@ def login_page(request):
     form = SignUpForm()
     return render(request, 'pages/login.html', locals())
 
+def about(request):
+
+    return render(request, 'pages/about.html', locals())
+
+def post(request,slug):
+    curPost = News.objects.get(name_slug=slug)
+
+    return render(request, 'pages/post.html', locals())
+
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')

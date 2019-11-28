@@ -21,6 +21,8 @@ urlpatterns = [
    path('delfav/<id>', views.delfav, name='delfav'),
    path('edit/<id>', views.edit, name='edit'),
    path('rent/', views.rent, name='rent'),
+   path('about/', views.about, name='about'),
+   path('post/<slug>', views.post, name='post'),
 
 
 
