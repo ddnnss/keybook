@@ -11,10 +11,10 @@
             <div class="header-nav">
                 <ul class="nav wrapper">
                     <li><a href="{% url 'search' %}">арендовать помещение</a></li>
-                    <li><a href="{% url 'about' %}">о нас</a></li>
-                    <li><a href="#">вы арендодатель ?</a></li>
+
+                    <li><a href="{% url 'login' %}">вы арендодатель ?</a></li>
                     <li><a href="{% url 'search' %}">смотреть на карте</a></li>
-                    <li><a href="#">контакты</a></li>
+                    <li><a href="{% url 'about' %}">контакты / о нас</a></li>
                     <!--li class="with-separator"><a href="#">контакты</a></li-->
                     {% if not request.user.is_authenticated %}
                         <li><a href="{% url 'login' %}">вход/регистрация</a></li>

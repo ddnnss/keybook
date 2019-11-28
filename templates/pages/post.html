@@ -11,7 +11,7 @@
 <section class="container container-sm about-us">
     <img style="margin-bottom: 25px" src="{{ curPost.imageBig.url }}">
       <div class="section-header">
-      <h3><span>КОРОТКО:</span></h3>
+      <h3><span>{{ curPost.name }}</span></h3>
     </div>
     <div class="about-text post-text">
         {{ curPost.description | safe }}
