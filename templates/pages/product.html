@@ -34,7 +34,11 @@
             <div class="product-owner-buttons">
                 <a href="#">НАПИСАТЬ ВЛАДЕЛЬЦУ</a>
                 <a href="#">ПОКАЗАТЬ НА КАРТЕ</a>
-                <a href="#">В ИЗБРАННОЕ</a>
+                {% if  request.user.is_authenticated and not house.id in allfavs %}
+                <a style="cursor: pointer" onclick="addfav({{ house.id }})">В ИЗБРАННОЕ</a>
+                    {% else %}
+                    <a style="cursor: no-drop" >В ИЗБРАННОМ</a>
+                {% endif %}
                 <a onclick="rent()">ЗАБРОНИРОВАТЬ</a>
             </div>
 
@@ -58,7 +62,7 @@
 
             </div>
             <div style="align-items: start" class="product-calendar wrapper ">
-
+     {% if  request.user.is_authenticated %}
                 <select style="width: 100%;
   height: 50px;
   border: 1px solid #c4c4c4;
@@ -90,6 +94,7 @@
                     {% endfor %}
 
                 </select>
+            {% endif %}
 
             </div>
         </div>
@@ -127,6 +132,12 @@
     </section>
 
 <script>
+
+
+    function addfav(id) {
+        window.location.replace(`/addfav/${id}`);
+    }
+
 let rentDays={}
 var arr=[]
     {% for x in rentdays %}

@@ -20,6 +20,11 @@ def index(request):
             allfavs.append(x.house.id)
     return render(request, 'pages/index.html', locals())
 def product(request,slug):
+    allfavs = []
+    if request.user.is_authenticated:
+        favs = Favorite.objects.filter(client=request.user)
+        for x in favs:
+            allfavs.append(x.house.id)
     house = House.objects.get(name_slug=slug)
     months = {'Январь':1,'Февраль':2,
               'Март': 3, 'Апрель': 4,

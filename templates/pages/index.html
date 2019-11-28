@@ -47,7 +47,7 @@
         <div class="container choose-wrapper">
             <div class="choose-common choose-on-map">
                 <div class="choose-overlay"></div>
-                <a href="">смотреть на карте</a>
+                <a href="{% url 'search' %}">смотреть на карте</a>
             </div>
             <div class="choose-common choose-rent">
                 <div class="choose-overlay"></div>
@@ -111,6 +111,55 @@
                 {% endfor %}
             </div>
         </div>
+    </section>
+
+     <section class="choose">
+     <div class="container">
+        <div class="section-header">
+                <h3><span>МЕРОПРИЯТИЯ</span> И ВСТРЕЧИ </h3>
+            </div>
+
+           <div  style="  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  grid-gap: 10px;">
+            <div class="choose-common " style="background: url({% static 'images/1.jpg'%})">
+                <div class="choose-overlay"></div>
+                <a style="padding: 20px 0;    width: 90%;   text-align: center;" href="">Медитация</a>
+            </div>
+             <div class="choose-common " style="background: url({% static 'images/2.jpg'%})">
+                <div class="choose-overlay"></div>
+                <a  style="padding: 20px 0;    width: 90%;   text-align: center;" href="">Психология Коучинг</a>
+            </div>
+             <div class="choose-common " style="background: url({% static 'images/3.jpg'%})">
+                <div class="choose-overlay"></div>
+                <a  style="padding: 20px 0;    width: 90%;   text-align: center;" href="">Репетиторство</a>
+            </div>
+             <div class="choose-common " style="background: url({% static 'images/4.jpg'%})">
+                <div class="choose-overlay"></div>
+                <a  style="padding: 20px 0;    width: 90%;   text-align: center;" href="">Спортивные мероприятия</a>
+            </div>
+             <div class="choose-common " style="background: url({% static 'images/5.jpg'%})">
+                <div class="choose-overlay"></div>
+                <a  style="padding: 20px 0;    width: 90%;   text-align: center;" href="">Анонимные собрания</a>
+            </div>
+             <div class="choose-common " style="background: url({% static 'images/6.jpg'%})">
+                <div class="choose-overlay"></div>
+                <a  style="padding: 20px 0;    width: 90%;   text-align: center;" href="">Конференции</a>
+            </div>
+             <div class="choose-common " style="background: url({% static 'images/7.jpg'%})">
+                <div class="choose-overlay"></div>
+                <a  style="padding: 20px 0;    width: 90%;   text-align: center;" href="">Ивенты</a>
+            </div>
+             <div class="choose-common " style="background: url({% static 'images/8.jpg'%})">
+                <div class="choose-overlay"></div>
+                <a  style="padding: 20px 0;    width: 90%;   text-align: center;" href="">обучающие курсы</a>
+            </div>
+
+
+        </div>
+     </div>
+
+
     </section>
 
     <script>
