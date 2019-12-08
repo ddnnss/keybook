@@ -1510,6 +1510,93 @@ textarea {
   margin-bottom: 40px;
 }
 
+.product-calendar h3 {
+  font: 14px "Montserrat Bold", sans-serif;
+  color: #646464;
+  margin: 0 30px;
+}
+
+.product-calendar-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.product-calendar-header a {
+  font-size: 36px;
+  cursor: pointer;
+  color: #646464;
+  opacity: 0.7;
+  -webkit-transition: opacity .2s linear;
+  -o-transition: opacity .2s linear;
+  transition: opacity .2s linear;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.product-calendar-header a:hover {
+  opacity: 1;
+  -webkit-transition: opacity .2s linear;
+  -o-transition: opacity .2s linear;
+  transition: opacity .2s linear;
+}
+
+.product-calendar-inner table {
+  width: 100%;
+  font: 14px "Montserrat Bold", sans-serif;
+  color: #646464;
+}
+
+.product-calendar-inner th {
+  cursor: cell;
+  text-align: center;
+}
+
+.product-calendar-inner .selected {
+  background: #17B8C2;
+  color: white;
+  font-weight: bold;
+  -webkit-transition: background-color .3s ease-in;
+  -o-transition: background-color .3s ease-in;
+  transition: background-color .3s ease-in;
+}
+
+.product-calendar-inner .bg-info {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 3px solid #17B8C2;
+}
+
+.product-calendar-inner tbody td {
+  height: 50px;
+  -webkit-transition: all .3s ease-in;
+  -o-transition: all .3s ease-in;
+  transition: all .3s ease-in;
+  cursor: pointer;
+}
+
+.product-calendar-inner tbody td[class*='day']:hover {
+  background: #17B8C2;
+  opacity: .7;
+  color: white;
+  -webkit-transition: all .3s ease-in;
+  -o-transition: all .3s ease-in;
+  transition: all .3s ease-in;
+}
+
+.product-calendar-inner .hidden {
+  display: none;
+}
+
 .product-inner {
   padding: 0 70px;
   display: grid;
@@ -1531,6 +1618,8 @@ textarea {
 .product-image img:first-child {
   grid-row: 1;
   grid-column: 1/8;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .product-image-thumb {
@@ -1546,6 +1635,11 @@ textarea {
   -webkit-transition: opacity .5s linear;
   -o-transition: opacity .5s linear;
   transition: opacity .5s linear;
+  border: 2px solid #17B8C2;
+}
+
+.product-image-thumb.selected {
+  border: 2px solid #17B8C2;
 }
 
 .product-prices {
@@ -1688,6 +1782,56 @@ textarea {
   text-transform: uppercase;
 }
 
+.fade-out {
+  -webkit-animation: fade-out .4s ease-out both;
+  animation: fade-out .4s ease-out both;
+}
+
+@-webkit-keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.fade-in {
+  -webkit-animation: fade-in .4s ease-out both;
+  animation: fade-in .4s ease-out both;
+}
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .lk-user {
   margin-bottom: 0;
 }
@@ -1815,7 +1959,6 @@ textarea {
 .all-houses-tab.tab-visible,
 .add-house-tab.tab-visible {
   opacity: 1;
-  z-index: 10;
 }
 
 .add-house-tab-form {
