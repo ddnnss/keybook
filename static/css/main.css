@@ -1229,7 +1229,6 @@ textarea {
 .best-offers-item__info-left p {
   font: 14px "Montserrat Bold", sans-serif;
   color: #646464;
-  text-align: center;
 }
 
 .best-offers-item__info-left span {
@@ -2138,7 +2137,7 @@ textarea {
 
 .footer-bottom {
   background: #646464;
-  padding: 15px 0;
+  padding: 30px 0;
 }
 
 .footer-bottom-social ul {
@@ -2151,7 +2150,7 @@ textarea {
 }
 
 .footer-bottom-social ul li a {
-  font: 14px "Montserrat Bold", sans-serif;
+  font: 10px "Montserrat Regular", sans-serif;
   color: #ffffff;
   text-transform: uppercase;
   margin-left: 50px;
@@ -2166,7 +2165,7 @@ textarea {
 }
 
 .footer-bottom-copyright p {
-  font: 18px "Montserrat Bold", sans-serif;
+  font: 12px "Montserrat Bold", sans-serif;
   color: #ffffff;
   text-transform: uppercase;
 }
