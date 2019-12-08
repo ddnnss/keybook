@@ -26,14 +26,15 @@ def product(request,slug):
         for x in favs:
             allfavs.append(x.house.id)
     house = House.objects.get(name_slug=slug)
-    months = {'Январь':1,'Февраль':2,
-              'Март': 3, 'Апрель': 4,
-              'Май': 5, 'Июнь': 6,
-              'Июль': 7, 'Август': 8,
-              'Сентябрь': 9, 'Октябрь': 10,
-              'Ноябрь': 11, 'Декабрь': 12}
-    days = range(32)
-    rentdays = Rent.objects.filter(house=house)
+
+    rentTime = 'no'
+    try:
+        rentime = GlobalRent.objects.get(house=house)
+        rentTime = rentime.globalRentTime
+        print(rentTime.rentTime)
+    except:
+        pass
+
     filters = CategoryFilter.objects.filter(category=house.category)
     images = HousePhotos.objects.filter(house=house)
 
@@ -213,5 +214,26 @@ def addfav(request,id):
 
 
 def rent(request):
-    Rent.objects.create(clientWhoRent=request.user,clientWhoHaveHouse_id=request.GET.get('whh'), house_id=request.GET.get('h'),month=request.GET.get('m'),day=request.GET.get('d'))
+    print(request.GET)
+    curRent =None
+    globalRent = None
+    try:
+        globalRent = GlobalRent.objects.get(house_id=request.GET.get('h'))
+    except:
+        GlobalRent.objects.create(house_id=request.GET.get('h'),globalRentTime=request.GET.get('globaltime'))
+        print('rent created')
+    if globalRent:
+        globalRent.globalRentTime = request.GET.get('globaltime')
+        globalRent.save()
+        print('rent updated')
+
+    try:
+        curRent = Rent.objects.get(clientWhoRent=request.user,clientWhoHaveHouse_id=request.GET.get('whh'), house_id=request.GET.get('h'))
+    except:
+        Rent.objects.create(clientWhoRent=request.user,clientWhoHaveHouse_id=request.GET.get('whh'), house_id=request.GET.get('h'),rentTime=request.GET.get('time'))
+        print('created')
+    if curRent:
+        curRent.rentTime = request.GET.get('time')
+        curRent.save()
+        print('updated')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))

@@ -1,6 +1,8 @@
 {% extends 'basic.html' %}
 {% load static %}
 {% block title %}
+    {% load mytags %}
+
     {{ block.super }} - Просмотр предложения
 {% endblock %}
 
@@ -188,7 +190,12 @@
                       {% for house in whoHavehouse %}
                     <div class="best-offers-item">
                         <div class="best-offers-item__image" style="background: url({{ house.house.image.url }}); background-size: cover">
-                            <span>Арендовано: {{ house.month }} {{ house.day }}</span>
+
+                                    <span>Арендовано:
+                             {% for x  in house.rentTime|loadjson %}
+                        {{ x }}
+                     {% endfor %}
+                            </span>
 
                         </div>
                         <div class="best-offers-item__info">
@@ -208,8 +215,13 @@
             <div class=" best-offers-inner">
                       {% for house in rentByme %}
                     <div class="best-offers-item">
+
                         <div class="best-offers-item__image" style="background: url({{ house.house.image.url }}); background-size: cover">
-                            <span>Арендовано: {{ house.month }} {{ house.day }}</span>
+                            <span>Арендовано:
+                             {% for x  in house.rentTime|loadjson %}
+                        {{ x }}
+                     {% endfor %}
+                            </span>
 
                         </div>
                         <div class="best-offers-item__info">

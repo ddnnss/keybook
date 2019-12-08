@@ -39,7 +39,7 @@
                     {% else %}
                     <a style="cursor: no-drop" >В ИЗБРАННОМ</a>
                 {% endif %}
-                <a onclick="rent()">ЗАБРОНИРОВАТЬ</a>
+                <a style="cursor: pointer" {% if  request.user.is_authenticated %} onclick="rent(){% endif %}">ЗАБРОНИРОВАТЬ</a>
             </div>
 
 
@@ -230,27 +230,27 @@
         window.location.replace(`/addfav/${id}`);
     }
 
-let rentDays={}
-var arr=[]
-    {% for x in rentdays %}
-        cM = '{{ x.month }}'
-        if (cM in rentDays){
-            arr.push({{ x.day }})
-            rentDays['{{ x.month }}']=arr
-    }
-    else {
-            arr=[]
-            cM = '{{ x.month }}'
-            arr.push({{ x.day }})
-            rentDays['{{ x.month }}']=arr
-        }
+//let rentDays={}
+//var arr=[]
+//    {#% for x in rentdays %#}
+//        cM = '{{ x.month }}'
+//        if (cM in rentDays){
+//            arr.push({{ x.day }})
+//            rentDays['{{ x.month }}']=arr
+//    }
+//    else {
+//            arr=[]
+//            cM = '{{ x.month }}'
+//            arr.push({{ x.day }})
+//            rentDays['{{ x.month }}']=arr
+//        }
 
 
 
 
 
-    {% endfor %}
-  console.log(rentDays)
+ //   {#% endfor %#}
+ // console.log(rentDays)
 
 function checkDays(el) {
         allD = document.getElementsByClassName('dayyysss')
@@ -277,12 +277,13 @@ function checkDays(el) {
 function rent() {
     var h = {{ house.id }}
     var whh = {{ house.client.id }}
-    var m = document.getElementById("mon");
-    var mon = m.options[m.selectedIndex].text;
-     var d = document.getElementById("day");
-    var day = d.options[d.selectedIndex].text;
-    console.log(mon,day)
-     window.location.replace(`/rent?m=${mon}&d=${day}&h=${h}&whh=${whh}`);
+    //var m = document.getElementById("mon");
+    //var mon = m.options[m.selectedIndex].text;
+    // var d = document.getElementById("day");
+    //var day = d.options[d.selectedIndex].text;
+    //console.log(mon,day)
+
+     window.location.replace(`/rent?globaltime=${JSON.stringify(selectedAll)}&h=${h}&whh=${whh}&time=${JSON.stringify(userSelected)}`);
 }
 </script>
     <script>
@@ -336,14 +337,21 @@ function rent() {
 
 <script>
 
-    console.log(getCookie('id-{{ house.id }}'))
+    console.log({{ rentTime.rentTime|safe }})
     today = new Date();
     currentMonth = today.getMonth();
     currentYear = today.getFullYear();
     selectYear = document.getElementById("year");
     selectMonth = document.getElementById("month");
-    let selected = []
-    let selectedAll =JSON.parse(getCookie('id-{{ house.id }}'))
+
+    let test = '{{ rentTime|safe }}';
+    let selected = [];
+    let selectedAll={};
+
+    let userSelected = {};
+
+
+
      console.log('selectedAll 1',selectedAll)
 
 
@@ -354,18 +362,28 @@ function rent() {
     let curYear = currentYear,
         curMonth = currentMonth +1
     //selectedAll[curYear]={}
+     userSelected[curYear]={}
+
+     if ( test === 'no' ){
+         selectedAll = {}
+         selectedAll[curYear]={}
+    }else {
+         selectedAll={{ rentTime|safe }};
+     }
+
+
     showCalendar(currentMonth, currentYear);
 
 
 
-    if (!selectedAll){
-            console.log('selectedAll 2',selectedAll)
-            selectedAll = {}
-            selectedAll[curYear]={}
-    }
+ //   if (!selectedAll){
+ //           console.log('selectedAll 2',selectedAll)
+
+ //   }
      for (let x in selectedAll[curYear][curMonth]) {
          // console.log(selectedAll[curYear][curMonth][x])
          document.getElementById(selectedAll[curYear][curMonth][x]).classList.add('selected')
+         document.getElementById(selectedAll[curYear][curMonth][x]).classList.add('globalrent')
          document.getElementById(selectedAll[curYear][curMonth][x]).removeAttribute('onclick');
      }
   //
@@ -393,6 +411,7 @@ function rent() {
         for (let x in selectedAll[curYear][curMonth]){
             // console.log(selectedAll[curYear][curMonth][x])
             document.getElementById(selectedAll[curYear][curMonth][x]).classList.add('selected')
+            document.getElementById(selectedAll[curYear][curMonth][x]).classList.add('globalrent')
              document.getElementById(selectedAll[curYear][curMonth][x]).removeAttribute('onclick');
         }
     }
@@ -420,6 +439,7 @@ function rent() {
         for (let x in selectedAll[curYear][curMonth]){
             console.log(selectedAll[curYear][curMonth][x])
             document.getElementById(selectedAll[curYear][curMonth][x]).classList.add('selected')
+            document.getElementById(selectedAll[curYear][curMonth][x]).classList.add('globalrent')
              document.getElementById(selectedAll[curYear][curMonth][x]).removeAttribute('onclick');
         }
 
@@ -522,12 +542,14 @@ function rent() {
         let days = document.getElementsByClassName(el)
         for (i of days){
             i.classList.toggle('selected')
+            i.classList.toggle('user')
         }
         getSelected()
     }
 
     function selectOne(el) {
         el.classList.toggle('selected')
+        el.classList.toggle('user')
         // console.log(el)
         // link = document.createElement('a')
         // link.setAttribute('href','#')
@@ -549,9 +571,19 @@ function rent() {
         // console.log('curYear', curYear)
         // console.log('curMonth', curMonth)
         selectedAll[curYear][curMonth]= alldays
-        console.log(selectedAll)
+        console.log('selectedAll',selectedAll)
 
-        setCookie('id-{{ house.id }}',JSON.stringify(selectedAll),7)
+         let userSelect = document.getElementsByClassName('user')
+        userdays = []
+        for (x of userSelect){
+            userdays.push( x.getAttribute('id'))
+
+        }
+        // console.log('curYear', curYear)
+        // console.log('curMonth', curMonth)
+        userSelected[curYear][curMonth]= userdays
+        console.log('userSelected',userSelected)
+
 
     }
 </script>

@@ -2,6 +2,7 @@ from django.db import models
 from pytils.translit import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
 from customuser.models import User
+import jsonfield
 
 
 
@@ -128,6 +129,7 @@ class Rent(models.Model):
     house = models.ForeignKey(House, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Помещение')
     month = models.CharField('Месяц',max_length=255, blank=False, null=True)
     day = models.CharField('День',max_length=255, blank=False, null=True)
+    rentTime = jsonfield.JSONField(blank=True,null=True)
 
     def __str__(self):
         return 'аренда {}'.format(self.house.name)
@@ -135,3 +137,7 @@ class Rent(models.Model):
     class Meta:
         verbose_name = "Аренда"
         verbose_name_plural = "Аренды"
+
+class GlobalRent(models.Model):
+    house = models.ForeignKey(House, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Помещение')
+    globalRentTime = jsonfield.JSONField(blank=True, null=True)
