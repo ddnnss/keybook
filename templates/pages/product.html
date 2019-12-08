@@ -305,24 +305,72 @@ function rent() {
 
     }
 </script>
+
+     <script>
+    function setCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+
+    function eraseCookie(name) {
+        document.cookie = name+'=; Max-Age=-99999999;';
+    }
+
+    </script>
+
 <script>
+
+    console.log(getCookie('id-{{ house.id }}'))
     today = new Date();
     currentMonth = today.getMonth();
     currentYear = today.getFullYear();
     selectYear = document.getElementById("year");
     selectMonth = document.getElementById("month");
     let selected = []
-    let selectedAll = {}
+    let selectedAll =JSON.parse(getCookie('id-{{ house.id }}'))
+     console.log('selectedAll 1',selectedAll)
+
+
     months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
 
     monthAndYear = document.getElementById("monthAndYear");
 
     let curYear = currentYear,
         curMonth = currentMonth +1
+    //selectedAll[curYear]={}
     showCalendar(currentMonth, currentYear);
-    selectedAll[curYear]={}
-    // console.log(selectedAll)
 
+
+
+    if (!selectedAll){
+            console.log('selectedAll 2',selectedAll)
+            selectedAll = {}
+            selectedAll[curYear]={}
+    }
+     for (let x in selectedAll[curYear][curMonth]) {
+         // console.log(selectedAll[curYear][curMonth][x])
+         document.getElementById(selectedAll[curYear][curMonth][x]).classList.add('selected')
+         document.getElementById(selectedAll[curYear][curMonth][x]).removeAttribute('onclick');
+     }
+  //
+
+ getSelected()
     function next() {
         currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
         currentMonth = (currentMonth + 1) % 12;
@@ -345,6 +393,7 @@ function rent() {
         for (let x in selectedAll[curYear][curMonth]){
             // console.log(selectedAll[curYear][curMonth][x])
             document.getElementById(selectedAll[curYear][curMonth][x]).classList.add('selected')
+             document.getElementById(selectedAll[curYear][curMonth][x]).removeAttribute('onclick');
         }
     }
 
@@ -371,6 +420,7 @@ function rent() {
         for (let x in selectedAll[curYear][curMonth]){
             console.log(selectedAll[curYear][curMonth][x])
             document.getElementById(selectedAll[curYear][curMonth][x]).classList.add('selected')
+             document.getElementById(selectedAll[curYear][curMonth][x]).removeAttribute('onclick');
         }
 
     }
@@ -501,7 +551,11 @@ function rent() {
         selectedAll[curYear][curMonth]= alldays
         console.log(selectedAll)
 
+        setCookie('id-{{ house.id }}',JSON.stringify(selectedAll),7)
+
     }
 </script>
+
+
 
 {% endblock %}
