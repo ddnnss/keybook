@@ -23,6 +23,8 @@ urlpatterns = [
    path('rent/', views.rent, name='rent'),
    path('about/', views.about, name='about'),
    path('post/<slug>', views.post, name='post'),
+   path('new_msg/', views.new_msg, name='new_msg'),
+   path('answer_msg/', views.answer_msg, name='answer_msg'),
 
 
 

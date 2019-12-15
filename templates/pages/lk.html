@@ -28,7 +28,7 @@
                 <button class="tablinks active" onclick="openTab(event, 'info')">мои данные</button>
                 <button class="tablinks" onclick="openTab(event, 'settings')">мои настройки</button>
                 <button class="tablinks" onclick="openTab(event, 'favorites')">избранное</button>
-                <button class="tablinks" onclick="openTab(event, 'history')">история</button>
+                    <button class="tablinks" onclick="openTab(event, 'chat')">чат</button>
 
                 <button class="tablinks" {% if not curUser.isOfferRent %}disabled{% endif %} onclick="openTab(event, 'houses')">мои помещения</button>
                 <button class="tablinks"  onclick="openTab(event, 'active-rent')">активные аренды</button>
@@ -108,11 +108,38 @@
 
         </div><!--//best-offers-best-offers-inner -->
             </div>
-            <div id="history" class="tab-content">
-              <div class="section-header">
-                  <h3><span>В РАЗРАБОТКЕ</span></h3>
+           <div id="chat" class="tab-content ">
+            <div class="chat-tab">
+
+                       <ul class="chat-tab-peoples" >
+                        {% for msg in chatPeoples %}
+                            <li style="margin-bottom: 10px"><img src="{{ msg.get_avatar }}">{{ msg.fio }}</li>
+                       {% endfor %}
+                        </ul>
+
+            <div class="chat-tab-messages">
+                <div class="chat-tab-messages-items">
+                    {% for msg in firstMsg %}
+                    <p class="chat-tab-messages-item from">
+                        {{ msg.message }}
+                        <span>{{ msg.createdAt | date }}</span>
+                    </p>
+                        {% if msg.answer %}
+                             <p class="chat-tab-messages-item own">
+                        {{ msg.answer }}
+                        <span>{{ msg.createdAt | date }}</span>
+                    </p>
+                        {% endif %}
+                    {% endfor %}
+
+
                 </div>
+                <textarea id="chat_message" placeholder="сообщение"></textarea>
+                <a onclick="sendMsg()" class="btn btn-sm">отправить</a>
             </div>
+            </div>
+
+        </div>
         <div id="houses" class="tab-content" style="height: 100vh">
             <div id="allhouses" class="all-houses-tab tab-visible">
                 <div class=" best-offers-inner">
@@ -242,6 +269,43 @@
 
     </section>
 <script>
+
+      function sendMsg() {
+        let msg = document.getElementById('chat_message').value
+
+        if(msg){
+
+
+          let xhr = new XMLHttpRequest();
+
+        let json = JSON.stringify({
+         msgTo: {{ firstMan }},
+          msgFrom: {{ request.user.id }},
+                msg: msg,
+             answerFor: {{ lastmsg }}
+
+        });
+
+        xhr.open("POST", '/answer_msg/')
+
+
+
+        xhr.send(json);
+        document.getElementsByClassName('chat-tab-messages')[0].appendChild(`
+                      <p class="chat-tab-messages-item own">
+                       ${msg}
+                        <span></span>
+                    </p>
+        `)
+
+
+
+
+        }
+
+
+    }
+
     function closeAdd() {
          document.getElementById('allhouses').classList.add('tab-visible')
         document.getElementById('addhouse').classList.remove('tab-visible')

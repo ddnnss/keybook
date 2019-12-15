@@ -21,3 +21,7 @@ def loadjson(data):
                     print (day)
             days.append(string)
         return days
+
+@register.filter
+def find_msg(things, category):
+    return things.filter(category=category)

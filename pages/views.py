@@ -2,13 +2,17 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.db.models import Q
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+
 from .models import *
 from filter.models import *
 from customuser.forms import *
+from customuser.models import *
 from django.contrib.auth import authenticate,logout,login
 from .forms import *
 from filter.models import *
-
+import json
 
 def index(request):
     allNews = News.objects.filter(isShowAtIndex=True)
@@ -145,7 +149,26 @@ def lk(request):
         allTypes = HouseCategory.objects.all()
         allTowns = Town.objects.all()
         favs = Favorite.objects.filter(client=request.user)
+        allMessages = Message.objects.filter(messageTo=request.user)
+        allMans = []
+        for x in allMessages:
+            if x.messageFrom_id not in allMans:
+                allMans.append(x.messageFrom_id)
+        print(allMans)
+        chatPeoples=[]
+        for x in allMans:
+            y = User.objects.get(id=x)
+            chatPeoples.append(y)
+        first = allMessages.first()
+        print(first)
+        try:
+            firstMan = first.messageFrom.id
+        except:
+            firstMan = None
 
+        print('first=',firstMan)
+        firstMsg = allMessages.filter(messageFrom_id=firstMan)
+        lastmsg = firstMsg.last().id
         rentByme = Rent.objects.filter(clientWhoRent=request.user)
         whoHavehouse = Rent.objects.filter(clientWhoHaveHouse=request.user)
 
@@ -237,3 +260,24 @@ def rent(request):
         curRent.save()
         print('updated')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+@csrf_exempt
+def new_msg(request):
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    Message.objects.create(messageTo_id=body['msgTo'],messageFrom_id=body['msgFrom'],message=body['msg'])
+    return JsonResponse({'foo': 'bar'})
+
+@csrf_exempt
+def answer_msg(request):
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    try:
+        msg = Message.objects.get(id=body['answerFor'])
+        msg.answer = message=body['msg']
+        msg.save()
+    except:
+        Message.objects.create(messageTo_id=body['msgTo'], messageFrom_id=body['msgFrom'], message=body['msg'])
+
+    return JsonResponse({'foo': 'bar'})

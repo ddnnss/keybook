@@ -70,6 +70,8 @@
                             <div class="best-offers-item__star">
                                 {% if request.user.is_authenticated and not house.id in allfavs%}
                                     <b onclick="addfav({{ house.id }})">&#9733;</b>
+                                    {% else %}
+                                       <b style="color: #FED500">&#9733;</b>
                                 {% endif %}
                                 <b></b>
                             </div>
