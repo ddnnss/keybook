@@ -168,7 +168,11 @@ def lk(request):
 
         print('first=',firstMan)
         firstMsg = allMessages.filter(messageFrom_id=firstMan)
-        lastmsg = firstMsg.last().id
+        try:
+            lastmsg = firstMsg.last().id
+        except:
+            lastmsg = None
+
         rentByme = Rent.objects.filter(clientWhoRent=request.user)
         whoHavehouse = Rent.objects.filter(clientWhoHaveHouse=request.user)
 
