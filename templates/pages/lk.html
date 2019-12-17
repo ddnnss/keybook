@@ -3,19 +3,20 @@
 {% block title %}
     {% load mytags %}
 
+
     {{ block.super }} - Просмотр предложения
 {% endblock %}
 
 
 {% block content %}
-{% include 'header-no-bg.html' %}
+    {% include 'header-no-bg.html' %}
 
-<section class="lk-user">
+    <section class="lk-user">
         <div class="container lk-user-inner">
             {% if curUser.avatar %}
-                   <img width="200" src="{{ curUser.avatar.url }}">
+                <img width="200" src="{{ curUser.avatar.url }}">
             {% else %}
-                   <img src="http://placehold.it/200">
+                <img src="http://placehold.it/200">
             {% endif %}
 
             <p>{{ curUser.fio }}</p>
@@ -28,7 +29,7 @@
                 <button class="tablinks active" onclick="openTab(event, 'info')">мои данные</button>
                 <button class="tablinks" onclick="openTab(event, 'settings')">мои настройки</button>
                 <button class="tablinks" onclick="openTab(event, 'favorites')">избранное</button>
-                    <button class="tablinks" onclick="openTab(event, 'chat')">чат</button>
+                <button class="tablinks" onclick="openTab(event, 'chat')">чат</button>
 
                 <button class="tablinks" {% if not curUser.isOfferRent %}disabled{% endif %} onclick="openTab(event, 'houses')">мои помещения</button>
                 <button class="tablinks"  onclick="openTab(event, 'active-rent')">активные аренды</button>
@@ -37,27 +38,27 @@
 
             <div id="info" class="tab-content" style="display: block">
 
-                    <form action="{% url 'update_req' %}" method="post" class="lk-tab-info" enctype="multipart/form-data">{% csrf_token %}
+                <form action="{% url 'update_req' %}" method="post" class="lk-tab-info" enctype="multipart/form-data">{% csrf_token %}
                     <div class="lk-tab-info-left">
 
-                           <p class="filter-separator tab-filter">основные данные</p>
-                            <div class="lk-tab-block">
-                                <input type="text" placeholder="ваше ф.и.о" name="{{ updateForm.fio.name }}" value="{{ curUser.fio }}">
-                                <input type="text" placeholder="ваше Email" name="{{ updateForm.email.name }}" value="{{ curUser.email }}">
-                                <input type="text" placeholder="ваш телефон" name="{{ updateForm.phone.name }}" value="{{ curUser.phone }}">
-                                <input type="text" placeholder="ваша профессия" name="{{ updateForm.profession.name }}" value="{{ curUser.profession }}">
-                                <input type="text" placeholder="ваше оборазование" name="{{ updateForm.study.name }}" value="{{ curUser.study }}">
-                                 <input type="text" placeholder="ваше хобби" name="{{ updateForm.hobby.name }}" value="{{ curUser.hobby }}">
-                                <label for="ava" style="cursor: pointer">
-                                    {% if curUser.avatar %}
-                                      изменить фото профиля <img width="50"  src="{{ curUser.avatar.url }}">
+                        <p class="filter-separator tab-filter">основные данные</p>
+                        <div class="lk-tab-block">
+                            <input type="text" placeholder="ваше ф.и.о" name="{{ updateForm.fio.name }}" value="{{ curUser.fio }}">
+                            <input type="text" placeholder="ваше Email" name="{{ updateForm.email.name }}" value="{{ curUser.email }}">
+                            <input type="text" placeholder="ваш телефон" name="{{ updateForm.phone.name }}" value="{{ curUser.phone }}">
+                            <input type="text" placeholder="ваша профессия" name="{{ updateForm.profession.name }}" value="{{ curUser.profession }}">
+                            <input type="text" placeholder="ваше оборазование" name="{{ updateForm.study.name }}" value="{{ curUser.study }}">
+                            <input type="text" placeholder="ваше хобби" name="{{ updateForm.hobby.name }}" value="{{ curUser.hobby }}">
+                            <label for="ava" style="cursor: pointer">
+                                {% if curUser.avatar %}
+                                    изменить фото профиля <img width="50"  src="{{ curUser.avatar.url }}">
                                 {% else %}
-                                      фото профиля не установлено! Кликните для установки
+                                    фото профиля не установлено! Кликните для установки
                                 {% endif %}
-                                     <input id="ava" name="{{ updateForm.avatar.name }}" type="file">
-                                </label>
+                                <input id="ava" name="{{ updateForm.avatar.name }}" type="file">
+                            </label>
 
-                            </div>
+                        </div>
                     </div>
 
                     <div class="tab-info-right">
@@ -68,249 +69,287 @@
                     </div>
 
                     <div class="wrapper">
-                         <a style="width: 100%" href="{% url 'logout' %}" class="btn btn-sm ">выход</a>
-                         <button style="width: 100%" type="submit" class="btn btn-sm btn-filled">внести изменения</button>
+                        <a style="width: 100%" href="{% url 'logout' %}" class="btn btn-sm ">выход</a>
+                        <button style="width: 100%" type="submit" class="btn btn-sm btn-filled">внести изменения</button>
 
                     </div>
 
-                    </form>
+                </form>
 
 
             </div>
 
             <div id="settings" class="tab-content">
                 <label class="custom-check-box"><span>Получать Рассылку</span>
-                                    <input type="checkbox" checked="checked">
-                                    <span class="checkmark"></span>
-                                </label>
+                    <input type="checkbox" checked="checked">
+                    <span class="checkmark"></span>
+                </label>
             </div>
 
             <div id="favorites" class="tab-content">
-                 <div class=" best-offers-inner">
-                     {% for fav in favs %}
-            <div class="best-offers-item">
-                <div class="best-offers-item__image" style="background: url({{ fav.house.image.url }}); background-size: cover">
-                    <span>{{ fav.house.price }} руб/сутки</span>
-
-                </div>
-                <div class="best-offers-item__info">
-                    <div class="best-offers-item__info-left">
-                       <p><a href="{% url 'product' fav.house.name_slug %}">{{ fav.house.name }}</a></p>
-
-                    </div>
-
-                </div>
-                <a class="add-btn" href="{% url 'delfav' fav.id %}">убрать из избранного</a>
-            </div><!--//best-offers-item -->
-            {% endfor %}
-
-
-
-        </div><!--//best-offers-best-offers-inner -->
-            </div>
-           <div id="chat" class="tab-content ">
-            <div class="chat-tab">
-
-                       <ul class="chat-tab-peoples" >
-                        {% for msg in chatPeoples %}
-                            <li style="margin-bottom: 10px"><img src="{{ msg.get_avatar }}">{{ msg.fio }}</li>
-                       {% endfor %}
-                        </ul>
-
-            <div class="chat-tab-messages">
-                <div class="chat-tab-messages-items">
-                    {% for msg in firstMsg %}
-                    <p class="chat-tab-messages-item from">
-                        {{ msg.message }}
-                        <span>{{ msg.createdAt | date }}</span>
-                    </p>
-                        {% if msg.answer %}
-                             <p class="chat-tab-messages-item own">
-                        {{ msg.answer }}
-                        <span>{{ msg.createdAt | date }}</span>
-                    </p>
-                        {% endif %}
-                    {% endfor %}
-
-
-                </div>
-                <textarea id="chat_message" placeholder="сообщение"></textarea>
-                <a onclick="sendMsg()" class="btn btn-sm">отправить</a>
-            </div>
-            </div>
-
-        </div>
-        <div id="houses" class="tab-content" style="height: 100vh">
-            <div id="allhouses" class="all-houses-tab tab-visible">
                 <div class=" best-offers-inner">
-                    <div  class="add-house">
-                        <a href="javascript: (void 0);" style="z-index: 10" onclick="showAdd()">+</a>
-                    </div>
-                    {% for house in myHouses %}
-                    <div class="best-offers-item">
-                        <div class="best-offers-item__image" style="background: url({{ house.image.url }}); background-size: cover">
-                            <span>{{ house.price }} руб/сутки</span>
-
-                        </div>
-                        <div class="best-offers-item__info">
-                            <div class="best-offers-item__info-left">
-                                <p><a href="{% url 'product' house.name_slug %}">{{ house.name }}</a></p>
+                    {% for fav in favs %}
+                        <div class="best-offers-item">
+                            <div class="best-offers-item__image" style="background: url({{ fav.house.image.url }}); background-size: cover">
+                                <span>{{ fav.house.price }} руб/сутки</span>
 
                             </div>
+                            <div class="best-offers-item__info">
+                                <div class="best-offers-item__info-left">
+                                    <p><a href="{% url 'product' fav.house.name_slug %}">{{ fav.house.name }}</a></p>
 
-                        </div>
-                        <a style="margin-bottom: 1px" class="add-btn" href="{% url 'addfilter' house.id %}">добавить фильтры</a>
-                        <a class="add-btn" href="{% url 'edit' house.id %}">редактировать</a>
+                                </div>
 
-                    </div><!--//best-offers-item -->
+                            </div>
+                            <a class="add-btn" href="{% url 'delfav' fav.id %}">убрать из избранного</a>
+                        </div><!--//best-offers-item -->
                     {% endfor %}
 
 
 
                 </div><!--//best-offers-best-offers-inner -->
             </div>
-            <div id="addhouse" class="add-house-tab ">
-                <form action="{% url 'addhouse' %}" method="post" class="add-house-tab-form" enctype="multipart/form-data">{% csrf_token %}
-                    <input name="{{ form.name.name }}" type="text" required placeholder="НАЗВАНИЕ ПОМЕЩЕНИЯ">
-                    <input name="{{ form.address.name }}" type="text" required placeholder="РАСПОЛОЖЕНИЕ (АДРЕС)">
-                    <input  name="{{ form.price.name }}" type="text" required placeholder="СТОИМОСТЬ ПОСУТОЧНОЙ АРЕНДЫ">
-                    <input name="{{ form.short_description.name }}" required type="text" placeholder="КОРОТКОЕ ОПИСАНИЕ">
-                    <select name="{{ form.town.name }}" required>
-                    <option selected disabled>ВЫБЕРИТЕ ГОРОД</option>
-                        {% for town in allTowns %}
-                            <option value="{{ town.id }}">{{ town.name }}</option>
+            <div id="chat" class="tab-content ">
+                <div class="chat-tab">
+
+                    <ul class="chat-tab-peoples" >
+                        {% for chat in allChats  %}
+                            {% for user in chat.users.all %}
+                                {% if user != request.user %}
+                                    <li style="margin-bottom: 10px" onclick="getmessages({{chat.id}})">
+                                        <img src="{{ user.get_avatar }}">
+                                        {{ user.fio }}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
                         {% endfor %}
-                    </select>
-                    <select name="{{ form.category.name }}" required>
-                    <option selected disabled>ВЫБЕРИТЕ ТИП ПОМЕЩЕНИЯ</option>
-                         {% for type in allTypes %}
-                          <option value="{{ type.id }}">{{ type.name }}</option>
-                        {% endfor %}
-                    </select>
+                    </ul>
 
-                    <textarea name="{{ form.info.name }}" placeholder="ОПИСАНИЕ ОБЪЕКТА" required></textarea>
+                    <div class="chat-tab-messages">
+                        <div class="chat-tab-messages-items">
 
-                    <input type="hidden"  name="{{ form.client.name }}" value="{{ curUser.id }}">
-                    <div class="add-house-tab-form-image-buttons">
-                        <label for="one_file">
-                            <span>+</span>
-                            <p>ПРЕВЬЮ</p>
-                            <input name="{{ form.image.name }}" id="one_file" type="file" required>
-                        </label>
-                         <label for="multuple_file">
-                             <span>+</span>
-                             <p>ФОТО ПОМЕЩЕНИЯ<br><span style="font-size: 8px; text-align: center; display: block">можно выбрать несколько</span></p>
-
-                            <input name="images" id="multuple_file" type="file" multiple>
-                        </label>
+                        </div>
+                        <textarea id="chat_message" placeholder="сообщение"></textarea>
+                        <a onclick="sendMsg()" class="btn btn-sm">отправить</a>
                     </div>
-                <div style="width: 400px;" class="wrapper"> <a style="width: 100%" onclick="closeAdd()" class="btn" >НАЗАД</a>
-                    <button style="width: 100%" class="btn btn-filled" type="submit">ОТПРАВИТЬ</button></div>
+                </div>
 
-                </form>
             </div>
+            <div id="houses" class="tab-content" style="height: 100vh">
+                <div id="allhouses" class="all-houses-tab tab-visible">
+                    <div class=" best-offers-inner">
+                        <div  class="add-house">
+                            <a href="javascript: (void 0);" style="z-index: 10" onclick="showAdd()">+</a>
+                        </div>
+                        {% for house in myHouses %}
+                            <div class="best-offers-item">
+                                <div class="best-offers-item__image" style="background: url({{ house.image.url }}); background-size: cover">
+                                    <span>{{ house.price }} руб/сутки</span>
 
-        </div>
+                                </div>
+                                <div class="best-offers-item__info">
+                                    <div class="best-offers-item__info-left">
+                                        <p><a href="{% url 'product' house.name_slug %}">{{ house.name }}</a></p>
+
+                                    </div>
+
+                                </div>
+                                <a style="margin-bottom: 1px" class="add-btn" href="{% url 'addfilter' house.id %}">добавить фильтры</a>
+                                <a class="add-btn" href="{% url 'edit' house.id %}">редактировать</a>
+
+                            </div><!--//best-offers-item -->
+                        {% endfor %}
+
+
+
+                    </div><!--//best-offers-best-offers-inner -->
+                </div>
+                <div id="addhouse" class="add-house-tab ">
+                    <form action="{% url 'addhouse' %}" method="post" class="add-house-tab-form" enctype="multipart/form-data">{% csrf_token %}
+                        <input name="{{ form.name.name }}" type="text" required placeholder="НАЗВАНИЕ ПОМЕЩЕНИЯ">
+                        <input name="{{ form.address.name }}" type="text" required placeholder="РАСПОЛОЖЕНИЕ (АДРЕС)">
+                        <input  name="{{ form.price.name }}" type="text" required placeholder="СТОИМОСТЬ ПОСУТОЧНОЙ АРЕНДЫ">
+                        <input name="{{ form.short_description.name }}" required type="text" placeholder="КОРОТКОЕ ОПИСАНИЕ">
+                        <select name="{{ form.town.name }}" required>
+                            <option selected disabled>ВЫБЕРИТЕ ГОРОД</option>
+                            {% for town in allTowns %}
+                                <option value="{{ town.id }}">{{ town.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <select name="{{ form.category.name }}" required>
+                            <option selected disabled>ВЫБЕРИТЕ ТИП ПОМЕЩЕНИЯ</option>
+                            {% for type in allTypes %}
+                                <option value="{{ type.id }}">{{ type.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <textarea name="{{ form.info.name }}" placeholder="ОПИСАНИЕ ОБЪЕКТА" required></textarea>
+
+                        <input type="hidden"  name="{{ form.client.name }}" value="{{ curUser.id }}">
+                        <div class="add-house-tab-form-image-buttons">
+                            <label for="one_file">
+                                <span>+</span>
+                                <p>ПРЕВЬЮ</p>
+                                <input name="{{ form.image.name }}" id="one_file" type="file" required>
+                            </label>
+                            <label for="multuple_file">
+                                <span>+</span>
+                                <p>ФОТО ПОМЕЩЕНИЯ<br><span style="font-size: 8px; text-align: center; display: block">можно выбрать несколько</span></p>
+
+                                <input name="images" id="multuple_file" type="file" multiple>
+                            </label>
+                        </div>
+                        <div style="width: 400px;" class="wrapper"> <a style="width: 100%" onclick="closeAdd()" class="btn" >НАЗАД</a>
+                            <button style="width: 100%" class="btn btn-filled" type="submit">ОТПРАВИТЬ</button></div>
+
+                    </form>
+                </div>
+
+            </div>
             <div id="active-rent" class="tab-content">
-             <p class="filter-separator tab-filter">Аредновали у меня</p>
-            <div class=" best-offers-inner">
-                      {% for house in whoHavehouse %}
-                    <div class="best-offers-item">
-                        <div class="best-offers-item__image" style="background: url({{ house.house.image.url }}); background-size: cover">
+                <p class="filter-separator tab-filter">Аредновали у меня</p>
+                <div class=" best-offers-inner">
+                    {% for house in whoHavehouse %}
+                        <div class="best-offers-item">
+                            <div class="best-offers-item__image" style="background: url({{ house.house.image.url }}); background-size: cover">
 
                                     <span>Арендовано:
-                             {% for x  in house.rentTime|loadjson %}
-                        {{ x }}
-                     {% endfor %}
+                                        {% for x  in house.rentTime|loadjson %}
+                                            {{ x }}
+                                        {% endfor %}
                             </span>
 
-                        </div>
-                        <div class="best-offers-item__info">
-                            <div class="best-offers-item__info-left">
-                                <p><a href="{% url 'product' house.house.name_slug %}">{{ house.house.name }}</a></p>
-                                <span>Арендатор: {{ house.clientWhoRent.fio }}</span>
+                            </div>
+                            <div class="best-offers-item__info">
+                                <div class="best-offers-item__info-left">
+                                    <p><a href="{% url 'product' house.house.name_slug %}">{{ house.house.name }}</a></p>
+                                    <span>Арендатор: {{ house.clientWhoRent.fio }}</span>
+                                </div>
+
                             </div>
 
-                        </div>
 
-
-                    </div><!--//best-offers-item -->
+                        </div><!--//best-offers-item -->
                     {% endfor %}
-            </div>
+                </div>
                 <br><br><br>
-             <p class="filter-separator tab-filter">Аредновал я</p>
-            <div class=" best-offers-inner">
-                      {% for house in rentByme %}
-                    <div class="best-offers-item">
+                <p class="filter-separator tab-filter">Аредновал я</p>
+                <div class=" best-offers-inner">
+                    {% for house in rentByme %}
+                        <div class="best-offers-item">
 
-                        <div class="best-offers-item__image" style="background: url({{ house.house.image.url }}); background-size: cover">
+                            <div class="best-offers-item__image" style="background: url({{ house.house.image.url }}); background-size: cover">
                             <span>Арендовано:
-                             {% for x  in house.rentTime|loadjson %}
-                        {{ x }}
-                     {% endfor %}
+                                {% for x  in house.rentTime|loadjson %}
+                                    {{ x }}
+                                {% endfor %}
                             </span>
 
-                        </div>
-                        <div class="best-offers-item__info">
-                            <div class="best-offers-item__info-left">
-                                <p><a href="{% url 'product' house.house.name_slug %}">{{ house.house.name }}</a></p>
+                            </div>
+                            <div class="best-offers-item__info">
+                                <div class="best-offers-item__info-left">
+                                    <p><a href="{% url 'product' house.house.name_slug %}">{{ house.house.name }}</a></p>
+
+                                </div>
 
                             </div>
 
-                        </div>
 
-
-                    </div><!--//best-offers-item -->
+                        </div><!--//best-offers-item -->
                     {% endfor %}
-            </div>
+                </div>
 
             </div>
         </div>
 
     </section>
-<script>
+    <script>
+        let curChat = 0
+        function sendMsg() {
+            let msg = document.getElementById('chat_message').value
+            if(msg){
+                let xhr = new XMLHttpRequest();
 
-      function sendMsg() {
-        let msg = document.getElementById('chat_message').value
+                let json = JSON.stringify({
+                    chatId: curChat,
+                    msgFrom: {{ request.user.id }},
+                    msg: msg
+                });
+                xhr.open("POST", '/add_msg/')
+                xhr.send(json);
+                getmessages(curChat)
+            }
+        }
+        function postData(url = '', data = {}) {
+            // Значения по умолчанию обозначены знаком *
+            return fetch(url, {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, cors, *same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: 'follow', // manual, *follow, error
+                referrer: 'no-referrer', // no-referrer, *client
+                body: JSON.stringify(data), // тип данных в body должен соответвовать значению заголовка "Content-Type"
+            })
+                .then(response => response.json()); // парсит JSON ответ в Javascript объект
+        }
 
-        if(msg){
+        function getmessages(chat) {
+            curChat = chat
+            console.log('curChat' , curChat)
+            let chatDiv = document.getElementsByClassName('chat-tab-messages-items')[0]
+            postData('/get_chat_msg/', {chat: chat})
+                .then(data => {
+                        document.getElementsByClassName('chat-tab-messages-items')[0].innerHTML=''
+                        console.log(JSON.stringify(data))
+                        data.forEach(element =>{
+                            console.log(element)
+                            if (element['own']){
+                                chatDiv.innerHTML=chatDiv.innerHTML + `
+                                <p class="chat-tab-messages-item own">
+                                   ${element['own'][0]}
+                                    <span>${element['own'][1]}</span>
+                                </p> `
+                            }else{
+                                chatDiv.innerHTML=chatDiv.innerHTML + `
+                                <p class="chat-tab-messages-item from">
+                                   ${element['from'][0]}
+                                    <span>${element['from'][1]}</span>
+                                </p> `
+                            }
+
+                        } )
+
+                        chatDiv.scrollTo(0,(chatDiv.scrollTop+2000))                 }
 
 
-          let xhr = new XMLHttpRequest();
-
-        let json = JSON.stringify({
-         msgTo: {{ firstMan }},
-          msgFrom: {{ request.user.id }},
-                msg: msg,
-             answerFor: {{ lastmsg }}
-
-        });
-
-        xhr.open("POST", '/answer_msg/')
 
 
-
-        xhr.send(json);
-        document.getElementsByClassName('chat-tab-messages')[0].appendChild(`
-                      <p class="chat-tab-messages-item own">
-                       ${msg}
-                        <span></span>
-                    </p>
-        `)
-
-
-
+                ) // JSON-строка полученная после вызова `response.json()`
+                .catch(error => console.error(error));
 
         }
 
 
-    }
 
-    function closeAdd() {
-         document.getElementById('allhouses').classList.add('tab-visible')
-        document.getElementById('addhouse').classList.remove('tab-visible')
-    }
 
-</script>
+
+
+
+
+
+
+
+        function closeAdd() {
+            document.getElementById('allhouses').classList.add('tab-visible')
+            document.getElementById('addhouse').classList.remove('tab-visible')
+        }
+
+    </script>
 
 {% endblock %}

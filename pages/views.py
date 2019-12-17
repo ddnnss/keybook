@@ -149,29 +149,38 @@ def lk(request):
         allTypes = HouseCategory.objects.all()
         allTowns = Town.objects.all()
         favs = Favorite.objects.filter(client=request.user)
-        allMessages = Message.objects.filter(messageTo=request.user)
-        allMans = []
-        for x in allMessages:
-            if x.messageFrom_id not in allMans:
-                allMans.append(x.messageFrom_id)
-        print(allMans)
-        chatPeoples=[]
-        for x in allMans:
-            y = User.objects.get(id=x)
-            chatPeoples.append(y)
-        first = allMessages.first()
-        print(first)
-        try:
-            firstMan = first.messageFrom.id
-        except:
-            firstMan = None
-
-        print('first=',firstMan)
-        firstMsg = allMessages.filter(messageFrom_id=firstMan)
-        try:
-            lastmsg = firstMsg.last().id
-        except:
-            lastmsg = None
+        allChats = Chat.objects.filter(users__in=[request.user.id])
+        print(allChats)
+        allChatPeoples = []
+        for x in allChats:
+            for y in x.users.all():
+                print(y.id)
+                if y.id !=request.user.id:
+                    allChatPeoples.append(User.objects.get(id=y.id))
+        print(allChatPeoples)
+        # allMessages = Message.objects.filter(messageTo=request.user)
+        # allMans = []
+        # for x in allMessages:
+        #     if x.messageFrom_id not in allMans:
+        #         allMans.append(x.messageFrom_id)
+        # print(allMans)
+        # chatPeoples=[]
+        # for x in allMans:
+        #     y = User.objects.get(id=x)
+        #     chatPeoples.append(y)
+        # first = allMessages.first()
+        # print(first)
+        # try:
+        #     firstMan = first.messageFrom.id
+        # except:
+        #     firstMan = None
+        #
+        # print('first=',firstMan)
+        # firstMsg = allMessages.filter(messageFrom_id=firstMan)
+        # try:
+        #     lastmsg = firstMsg.last().id
+        # except:
+        #     lastmsg = None
 
         rentByme = Rent.objects.filter(clientWhoRent=request.user)
         whoHavehouse = Rent.objects.filter(clientWhoHaveHouse=request.user)
@@ -270,7 +279,20 @@ def rent(request):
 def new_msg(request):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
-    Message.objects.create(messageTo_id=body['msgTo'],messageFrom_id=body['msgFrom'],message=body['msg'])
+    chat = Chat.objects.filter(users__in=[body['msgFrom'], body['msgTo']])
+    for x in chat.all():
+        if x.id != request.user.id:
+            chat = False
+
+    if chat:
+        print('chat found')
+        Message.objects.create(chat_id=chat[0].id, user_id=body['msgFrom'], message=body['msg'])
+    else:
+        print('chat not found')
+        newChat = Chat.objects.create()
+        newChat.users.add(body['msgFrom'], body['msgTo'])
+        Message.objects.create(chat=newChat, user_id=body['msgFrom'], message=body['msg'])
+    # Message.objects.create(messageTo_id=body['msgTo'],messageFrom_id=body['msgFrom'],message=body['msg'])
     return JsonResponse({'foo': 'bar'})
 
 @csrf_exempt
@@ -285,3 +307,29 @@ def answer_msg(request):
         Message.objects.create(messageTo_id=body['msgTo'], messageFrom_id=body['msgFrom'], message=body['msg'])
 
     return JsonResponse({'foo': 'bar'})
+
+
+@csrf_exempt
+def get_chat_msg(request):
+    respose=[]
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    print(body['chat'])
+    chat=Chat.objects.get(id=body['chat'])
+    print(chat.message_set.all())
+    for x in chat.message_set.all():
+        chatItem = {}
+        chatItemInner = []
+        if x.user == request.user:
+            chatItem['own']=[x.message,x.createdAt.strftime("%b %d %Y %H:%M:%S")]
+        else:
+            chatItem['from'] = [x.message,x.createdAt.strftime("%b %d %Y %H:%M:%S")]
+        respose.append(chatItem)
+    return JsonResponse(respose,safe=False)
+
+@csrf_exempt
+def add_msg(request):
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    Message.objects.create(chat_id=body['chatId'], user_id=body['msgFrom'], message=body['msg'])
+    return JsonResponse('ok',safe=False)

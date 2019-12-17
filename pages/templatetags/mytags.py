@@ -22,6 +22,9 @@ def loadjson(data):
             days.append(string)
         return days
 
-@register.filter
-def find_msg(things, category):
-    return things.filter(category=category)
+
+@register.simple_tag
+def get_chat_user(data,curUser):
+    print(curUser)
+    print(data.users.all().exclude(curUser))
+    return

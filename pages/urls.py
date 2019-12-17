@@ -24,7 +24,9 @@ urlpatterns = [
    path('about/', views.about, name='about'),
    path('post/<slug>', views.post, name='post'),
    path('new_msg/', views.new_msg, name='new_msg'),
+   path('add_msg/', views.add_msg, name='add_msg'),
    path('answer_msg/', views.answer_msg, name='answer_msg'),
+   path('get_chat_msg/', views.get_chat_msg, name='get_chat_msg'),
 
 
 
