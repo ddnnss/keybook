@@ -66,6 +66,11 @@ def logout_page(request):
     return HttpResponseRedirect('/')
 
 def search(request):
+    allfavs = []
+    if request.user.is_authenticated:
+        favs = Favorite.objects.filter(client=request.user)
+        for x in favs:
+            allfavs.append(x.house.id)
     allTowns = Town.objects.all()
     allTypes = HouseCategory.objects.all()
     products = House.objects.all()

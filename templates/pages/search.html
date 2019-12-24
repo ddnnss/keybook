@@ -222,20 +222,27 @@
         <div class=" best-offers-inner">
             {% for house in allProduct %}
             <div class="best-offers-item">
-                <div class="best-offers-item__image" style="background: url({{ house.image.url }}); background-size: cover">
-                    <span>{{ house.price }} руб/сутки</span>
-                    <div class="best-offers-item__star">
-                        <b>&#9733;</b>
-                        <b></b>
-                    </div>
-                </div>
-                <div class="best-offers-item__info">
-                    <div class="best-offers-item__info-left">
-                        <p><a href="{%  url 'product' house.name_slug %}">{{ house.name }}</a></p>
-                        <span>{{ house.short_description }}</span>
-                    </div>
-                </div>
-            </div><!--//best-offers-item -->
+                        <div class="best-offers-item__image" style="background: url({{ house.image.url }}); background-size: cover">
+                            <span>{{ house.price }} руб/сутки</span>
+                            <div class="best-offers-item__star">
+                                {% if  request.user.is_authenticated%}
+                                {% if  not house.id in allfavs%}
+                                    <b onclick="addfav({{ house.id }})">&#9733;</b>
+                                    {% else %}
+                                       <b style="color: #FED500">&#9733;</b>
+                                {% endif %}
+                                     <b></b>
+                             {% endif %}
+
+                            </div>
+                        </div>
+                        <div class="best-offers-item__info">
+                            <div class="best-offers-item__info-left">
+                                <p><a href="{% url 'product' house.name_slug %}">{{ house.name }}</a></p>
+                                <span>{{ house.short_description }}</span>
+                            </div>
+                        </div>
+                    </div><!--//best-offers-item -->
             {% endfor %}
 
 
