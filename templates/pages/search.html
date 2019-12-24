@@ -254,6 +254,9 @@
 </section>
 
 <script>
+function addfav(id) {
+        window.location.replace(`/addfav/${id}`);
+    }
     {% if anchor %}
         window.location = '#{{ anchor }}'
     {% endif %}
