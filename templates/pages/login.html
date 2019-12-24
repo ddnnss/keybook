@@ -73,6 +73,7 @@
                         <input type="text" name="{{ form.email.name }}" required placeholder="ваш email">
                          <input type="text" name="{{ form.phone.name }}" required placeholder="ваш телефон">
                         <input type="password"  name="{{ form.password1.name }}" required placeholder="введите пароль">
+                          <p style="margin-top: -25px">пароль должен состоять не менее из 8 символов, быть не похожим на логин, а также не содержать одинаковые символы</p>
                           <input type="password"  name="{{ form.password2.name }}" required placeholder="повторите пароль">
                         <label class="custom-check-box"><span>вы арендодатель?</span>
                             <input type="checkbox"  name="{{ form.isOfferRent.name }}">
