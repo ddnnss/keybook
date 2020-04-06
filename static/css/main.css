@@ -125,18 +125,18 @@ a {
 }
 
 @font-face {
-  font-family: 'Montserrat Bold';
-  src: url("../fonts/Montserrat-Bold.eot");
-  src: local("Montserrat Bold"), local("Montserrat-Bold"), url("../fonts/Montserrat-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/Montserrat-Bold.woff") format("woff"), url("../fonts/Montserrat-Bold.ttf") format("truetype");
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
   font-family: 'Montserrat Regular';
   src: url("../fonts/Montserrat-Regular.eot");
   src: local("Montserrat Regular"), local("Montserrat-Regular"), url("../fonts/Montserrat-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/Montserrat-Regular.woff") format("woff"), url("../fonts/Montserrat-Regular.ttf") format("truetype");
   font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat Bold';
+  src: url("../fonts/Montserrat-Bold.eot");
+  src: local("Montserrat Bold"), local("Montserrat-Bold"), url("../fonts/Montserrat-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/Montserrat-Bold.woff") format("woff"), url("../fonts/Montserrat-Bold.ttf") format("truetype");
+  font-weight: bold;
   font-style: normal;
 }
 
@@ -146,6 +146,10 @@ section {
 
 a {
   color: inherit;
+}
+
+.modal-p {
+  font: 16px "Montserrat Regular", sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -164,8 +168,17 @@ a {
   background: #17B8C2;
 }
 
+.mb-10 {
+  margin-bottom: 10px;
+}
+
 .full-row {
   grid-column: span 2;
+}
+
+.modal-h {
+  font: 25px "Montserrat Bold", sans-serif;
+  text-transform: uppercase;
 }
 
 .filter-separator {
@@ -2114,8 +2127,10 @@ textarea {
 }
 
 .chat-tab-messages {
-  -ms-flex-preferred-size: 40%;
-  flex-basis: 40%;
+  width: 700px;
+  display: none;
+  position: absolute;
+  right: 0;
 }
 
 .chat-tab-messages textarea {
@@ -2152,6 +2167,124 @@ textarea {
   background: #17B8C2;
   color: #ffffff;
   margin-left: auto;
+}
+
+#chat1 {
+  display: block;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+  display: none;
+  -webkit-transition: opacity 400ms ease-in;
+  -o-transition: opacity 400ms ease-in;
+  transition: opacity 400ms ease-in;
+  pointer-events: none;
+  padding: 0 10px;
+}
+
+.modal-active {
+  display: block;
+  pointer-events: auto;
+  overflow-y: auto;
+}
+
+.modal-dialog {
+  position: relative;
+  width: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.modal-dialog.buy-modal {
+  height: 100vh;
+}
+
+.modal-content {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background-clip: padding-box;
+  background: #FFFFFF;
+  -webkit-box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+  outline: 0;
+  width: 480px;
+  padding: 35px 45px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.modal-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.modal-title {
+  font: 32px 'GB',sans-serif;
+  color: #000000;
+  line-height: 39px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+.close {
+  float: right;
+  font-family: sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .5;
+  text-decoration: none;
+}
+
+.close.home-close {
+  position: absolute;
+  right: 40px;
+}
+
+.close:focus,
+.close:hover {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: .75;
+}
+
+.modal-body {
+  position: relative;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  overflow: auto;
 }
 
 .login-tabs {

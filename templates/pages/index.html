@@ -176,6 +176,31 @@
     }
     </script>
 
+ <div id="openModal" class="modal modal-active">
+            <div class="modal-dialog buy-modal" >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title"> <i class="fa fa-rub"></i></h3>
+                        <a href="#" onclick="openModal()" title="Close" class="close">×</a>
+                    </div>
+                    <div style="text-align: center" class="modal-body">
+                       <p class="mb-10 modal-p">2020 год. Короновирус внёс очень существенные коррективы в сознание людей. Большинство руководителей и владельцев бизнесов понимает, что обратно в оффлайн бизнес
+                         вернётся уже не на 100%, не на те позиции, что до пандемии. Многие задумаются над тем, чтобы рюперкводить штат на удаленную работу на постоянной основе,
+                         переведут сотрудников на домашнюю работу, и оставят только тех, кто должен работать в офисе. Часть бизнесов полностью уйдёт на удаленную работу, и им будут
+                         нужны только митинг румы для встреч раз в неделю. Люди захотят большей изоляции и привыкнут к ней. Те кто раньше проводил занятия в кафе захотят быть
+                         разделены с людьми стеной , сидеть в чистых кабинетах , и минимизировать контакты с посторонними людьми.</p>
+                       <h2 class="mb-10 modal-h" >Сейчас самое время для нашего сервиса : sberoom</h2>
+                       <p class="modal-p">решение в кризис и пандемию.</p>
 
+                    </div>
+                </div>
+            </div>
+        </div>
+  <script>
+  function openModal() {
+        document.getElementsByClassName('modal')[0].classList.toggle('modal-active')
+
+    }
+</script>
 
 {% endblock %}
